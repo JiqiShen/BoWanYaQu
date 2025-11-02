@@ -1,6 +1,9 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/activity-list/activity-list",
+    "pages/calendar/calendar",
+    "pages/account/account"
   ],
   "window": {
     "navigationBarTitleText": "Hello World"

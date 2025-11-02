@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/activity-list/activity-list.js
 Page({
 
   /**
