@@ -1,3 +1,10 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f9f2f2",
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#d81e06",
+  "navigationBarTitleText": "社团活动",
+  "navigationBarTextStyle": "white",
+  "navigationStyle":"custom"
 }
