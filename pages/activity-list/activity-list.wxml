@@ -1,2 +1,246 @@
 <!--pages/activity-list/activity-list.wxml-->
-<text>pages/activity-list/activity-list.wxml</text>
+<view class="activity-page">
+  <!-- 搜索框 -->
+  <view class="search-section">
+    <view class="search-container">
+      <input 
+        class="search-input" 
+        placeholder="搜索活动名称、社团或地点" 
+        value="{{searchKeyword}}"
+        bindinput="onSearch"
+      />
+      <view class="search-icon">🔍</view>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-section">
+    <view class="filter-header" bindtap="toggleFilter">
+      <text class="filter-title">筛选条件</text>
+      <view class="filter-toggle {{filterExpanded ? 'expanded' : ''}}">
+        <text class="toggle-text">{{filterExpanded ? '收起' : '展开'}}</text>
+        <view class="toggle-arrow">▼</view>
+      </view>
+    </view>
+    
+    <!-- 展开的筛选条件 -->
+    <view class="filter-content {{filterExpanded ? 'expanded' : ''}}">
+      <!-- 活动状态筛选 -->
+      <view class="filter-group">
+        <text class="filter-label">活动状态</text>
+        <view class="filter-options">
+          <view 
+            class="filter-option {{filterStatus === 'all' ? 'active' : ''}}" 
+            data-status="all"
+            bindtap="selectStatus"
+          >
+            全部
+          </view>
+          <view 
+            class="filter-option {{filterStatus === 'ongoing' ? 'active' : ''}}" 
+            data-status="ongoing"
+            bindtap="selectStatus"
+          >
+            进行中
+          </view>
+          <view 
+            class="filter-option {{filterStatus === 'upcoming' ? 'active' : ''}}" 
+            data-status="upcoming"
+            bindtap="selectStatus"
+          >
+            未开始
+          </view>
+          <view 
+            class="filter-option {{filterStatus === 'ended' ? 'active' : ''}}" 
+            data-status="ended"
+            bindtap="selectStatus"
+          >
+            已结束
+          </view>
+        </view>
+      </view>
+      
+      <!-- 活动类型筛选 -->
+      <view class="filter-group">
+        <text class="filter-label">活动类型</text>
+        <view class="filter-options">
+          <view 
+            class="filter-option {{filterType === 'all' ? 'active' : ''}}" 
+            data-type="all"
+            bindtap="selectType"
+          >
+            全部
+          </view>
+          <view 
+            class="filter-option {{filterType === 'sports' ? 'active' : ''}}" 
+            data-type="sports"
+            bindtap="selectType"
+          >
+            体育竞技
+          </view>
+          <view 
+            class="filter-option {{filterType === 'art' ? 'active' : ''}}" 
+            data-type="art"
+            bindtap="selectType"
+          >
+            文艺表演
+          </view>
+          <view 
+            class="filter-option {{filterType === 'academic' ? 'active' : ''}}" 
+            data-type="academic"
+            bindtap="selectType"
+          >
+            学术讲座
+          </view>
+          <view 
+            class="filter-option {{filterType === 'volunteer' ? 'active' : ''}}" 
+            data-type="volunteer"
+            bindtap="selectType"
+          >
+            志愿服务
+          </view>
+        </view>
+      </view>
+      
+      <!-- 日期筛选 -->
+      <view class="filter-group">
+        <text class="filter-label">活动日期</text>
+        <picker 
+          mode="date" 
+          value="{{filterDate}}" 
+          bindchange="selectDate"
+        >
+          <view class="date-picker {{filterDate ? 'has-value' : ''}}">
+            {{filterDate ? filterDate : '选择日期'}}
+          </view>
+        </picker>
+      </view>
+      
+      <!-- 重置按钮 -->
+      <view class="filter-actions">
+        <view class="reset-btn" bindtap="resetFilters">重置筛选</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 活动列表 -->
+  <view class="activity-list-section">
+    <!-- 加载状态 -->
+    <view class="loading-container" wx:if="{{loading}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <!-- 活动列表 -->
+    <view class="activity-list" wx:else>
+      <block wx:for="{{activityList}}" wx:key="id">
+        <view class="activity-item" bindtap="goToActivityDetail" data-id="{{item.id}}">
+          <!-- 活动封面和状态 -->
+          <view class="activity-cover-container">
+            <image class="activity-cover" src="{{item.coverImage}}" mode="aspectFill" />
+            <view class="activity-status {{item.status === '进行中' ? 'ongoing' : item.status === '已结束' ? 'ended' : 'upcoming'}}">
+              {{item.status}}
+            </view>
+            <view class="club-badge">{{item.organizer}}</view>
+          </view>
+          
+          <!-- 活动信息 -->
+          <view class="activity-info">
+            <view class="activity-header">
+              <text class="activity-title">{{item.title}}</text>
+              <view class="activity-type">{{item.type}}</view>
+            </view>
+            
+            <view class="activity-description">{{item.description}}</view>
+            
+            <view class="activity-meta">
+              <view class="meta-item">
+                <text class="meta-icon">🕒</text>
+                <text class="meta-text">{{item.startTime}}</text>
+              </view>
+              <view class="meta-item">
+                <text class="meta-icon">📍</text>
+                <text class="meta-text">{{item.location}}</text>
+              </view>
+              <view class="meta-item">
+                <text class="meta-icon">👥</text>
+                <text class="meta-text">{{item.participants}}人报名</text>
+              </view>
+            </view>
+            
+            <view class="activity-footer">
+              <view class="activity-actions">
+                <view 
+                  class="action-btn contact-btn" 
+                  catchtap="contactOrganizer" 
+                  data-id="{{item.id}}"
+                >
+                  <text class="action-icon">📞</text>
+                  <text class="action-text">联系负责人</text>
+                </view>
+                <view 
+                  class="action-btn like-btn {{item.isLiked ? 'liked' : ''}}" 
+                  catchtap="likeActivity" 
+                  data-id="{{item.id}}"
+                >
+                  <text class="action-icon">{{item.isLiked ? '❤️' : '🤍'}}</text>
+                  <text class="action-count">{{item.likeCount}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!loading && activityList.length === 0}}">
+      <image class="empty-image" src="/images/empty-activity.png" />
+      <text class="empty-text">暂无社团活动</text>
+      <text class="empty-desc">快去创建或关注社团活动吧</text>
+    </view>
+  </view>
+
+  <!-- 翻页控件 -->
+  <view class="pagination-section" wx:if="{{!loading && activityList.length > 0}}">
+    <view class="pagination-container">
+      <view 
+        class="page-btn prev-btn {{currentPage === 1 ? 'disabled' : ''}}" 
+        bindtap="prevPage"
+      >
+        上一页
+      </view>
+      
+      <view class="page-info">
+        <text class="current-page">{{currentPage}}</text>
+        <text class="page-separator">/</text>
+        <text class="total-pages">{{totalPages}}</text>
+      </view>
+      
+      <view 
+        class="page-btn next-btn {{currentPage === totalPages ? 'disabled' : ''}}" 
+        bindtap="nextPage"
+      >
+        下一页
+      </view>
+    </view>
+    
+    <view class="page-jump">
+      <input 
+        class="jump-input" 
+        type="number" 
+        placeholder="页码" 
+        min="1" 
+        max="{{totalPages}}"
+        bindblur="jumpToPage"
+      />
+      <text class="jump-text">跳转</text>
+    </view>
+  </view>
+
+  <!-- 创建活动悬浮按钮 -->
+  <view class="floating-btn" bindtap="createActivity">
+    <text class="btn-text">+</text>
+    <text class="btn-label">发布活动</text>
+  </view>
+</view>
