@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/activity-list/activity-list",
     "pages/calendar/calendar",
-    "pages/account/account"
+    "pages/account/account",
+    "pages/activity-detail/activity-detail"
   ],
   "window": {
     "navigationBarTitleText": "Hello World"

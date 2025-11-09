@@ -1,0 +1,69 @@
+<!-- 活动详情页面 -->
+<view class="container">
+
+  <!-- 活动基本信息 -->
+  <view class="section" style="height: 210rpx; display: block; box-sizing: border-box">
+    <!-- 活动名称 -->
+    <view class="title-row">
+      <text class="activity-name">{{activityData.name}}</text>
+      <!-- 活动进行状态-->
+      <view class="status-tag">{{activityData.status}}</view>
+    </view>
+
+    <!-- 活动标签 -->
+    <view class="tags">
+      <block wx:for="{{activityData.tags}}" wx:key="index">
+        <text class="tag">{{item}}</text>
+      </block>
+    </view>
+  </view>
+
+  <!-- 活动详情 -->
+  <view class="section">
+    <text class="section-title">活动详情</text>
+    <!-- 活动详情内容引用位置 -->
+    <text class="detail-content">{{activityData.detail}}</text>
+  </view>
+
+  <!-- 时间地点 -->
+  <view class="section">
+    <text class="section-title">时间地点</text>
+
+    <!-- 时间信息引用位置 -->
+    <view class="info-item">
+      <text class="info-icon">⏰</text>
+      <text class="info-text">{{activityData.time}}</text>
+    </view>
+
+    <!-- 地点信息引用位置 -->
+    <view class="info-item">
+      <text class="info-icon">📍</text>
+      <text class="info-text">{{activityData.location}}</text>
+    </view>
+  </view>
+
+  <!-- 报名情况 -->
+  <view class="section">
+    <text class="section-title">报名情况</text>
+
+
+    <!-- 报名人数信息引用位置 -->
+    <view class="registration-info">
+      <text class="registration-count">已报名: {{activityData.registeredCount}}/{{activityData.totalCount}}人</text>
+      <text class="registration-count">剩余: {{activityData.remainingCount}}个名额</text>
+    </view>
+  </view>
+
+  <!-- 关注活动 -->
+  <view class="follow-section">
+    <text class="follow-text">关注活动</text>
+    <switch class="follow-switch" checked="{{activityData.isFollowed}}" bindchange="onFollowChange" color="#d32f2f" />
+  </view>
+
+  <!-- 报名按钮 -->
+  <view class="action-buttons">
+    <button class="btn {{activityData.isRegistered ? 'btn-disabled' : 'btn-primary'}}" bindtap="onRegisterTap" disabled="{{activityData.isRegistered}}">
+      {{activityData.isRegistered ? '已报名' : '立即报名'}}
+    </button>
+  </view>
+</view>
