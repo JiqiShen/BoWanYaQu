@@ -5,7 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    banners: [
+      { id: 1, url: "/assets/banners/b1.png" },
+      { id: 2, url: "/assets/banners/b2.png" },
+      { id: 3, url: "/assets/banners/b3.png" }
+    ]
+  },
+  onTapBanner(e) {
+    const id = e.currentTarget.dataset.id
+    console.log('tap banner', id)
+    // 这里可以跳转到活动详情
+    // wx.navigateTo({ url: `/pages/events/detail?id=${id}` })
   },
 
   /**
@@ -26,7 +36,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    "index"
   },
 
   /**

@@ -1,2 +1,45 @@
 <!--pages/index/index.wxml-->
-<text>pages/index/index.wxml</text>
+
+<scroll-view scroll-y style="height:100vh;">
+  <!-- 顶部横幅 -->
+  <swiper class="banner" autoplay circular indicator-dots>
+    <block wx:for="{{banners}}" wx:key="id">
+      <swiper-item>
+        <image class="banner-img" src="{{item.url}}" mode="aspectFill" />
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 最新活动 -->
+  <view class="section">
+    <view class="h-title">最新活动</view>
+    <view class="card" style="background:#f1a9a0;">
+      <view class="row space-between">
+        <text>社团纳新宣讲</text>
+        <text class="muted">今天 19:00</text>
+      </view>
+    </view>
+    <view class="card" style="background:#f7e28c;">
+      <view class="row space-between">
+        <text>编程马拉松</text>
+        <text class="muted">周五 全天</text>
+      </view>
+    </view>
+    <view class="card" style="background:#bff4b9; border:2rpx solid #4e8cff;">
+      <view class="row space-between">
+        <text>音乐节志愿者</text>
+        <text class="muted">本周末</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关注的社团 -->
+  <view class="section">
+    <view class="h-title">关注的社团</view>
+    <view class="grid">
+      <view class="square" style="background:#f1a9a0;"></view>
+      <view class="square" style="background:#fbf3a3;"></view>
+      <view class="square" style="background:#bff4b9;"></view>
+    </view>
+  </view>
+</scroll-view>

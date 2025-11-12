@@ -7,6 +7,41 @@
     "pages/activity-detail/activity-detail"
   ],
   "window": {
-    "navigationBarTitleText": "Hello World"
+    "navigationBarTitleText": "博玩雅趣",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#000000",
+    "backgroundColor": "#f0f0f0",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/tab/home.png",
+        "selectedIconPath": "assets/tab/home_active.png"
+      },
+      {
+        "pagePath": "pages/activity-list/activity-list",
+        "text": "活动",
+        "iconPath": "assets/tab/activity.png",
+        "selectedIconPath": "assets/tab/activity_active.png"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "text": "日程",
+        "iconPath": "assets/tab/calendar.png",
+        "selectedIconPath": "assets/tab/calendar_active.png"
+      },
+      {
+        "pagePath": "pages/account/account",
+        "text": "账号",
+        "iconPath": "assets/tab/account.png",
+        "selectedIconPath": "assets/tab/account_active.png"
+      }
+    ]
   }
 }
