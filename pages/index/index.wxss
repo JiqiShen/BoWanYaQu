@@ -1,0 +1,3 @@
+/* Home specific overrides if needed */
+.banner { height: 300rpx; margin: 24rpx; border-radius: 16rpx; overflow: hidden; }
+.banner-img { width: 100%; height: 100%; display: block; }
