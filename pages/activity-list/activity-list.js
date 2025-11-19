@@ -8,6 +8,9 @@ Page({
   data: {
     // 活动列表数据 - 存储从服务器获取的活动信息
     activityList: [],
+
+    // 用户身份数据 - 标识用户的权限等级
+    userRole: 'student', // 用户身份：student-普通学生, manager-社团管理人员, admin-管理员
     
     // 分页相关数据 - 管理列表的分页状态
     currentPage: 1,      // 当前页码
@@ -36,6 +39,9 @@ Page({
   onLoad(options) {
     // 页面加载时立即获取活动数据
     this.loadActivityData();
+    // 获取用户身份信息
+    this.getUserRole();
+    this.loadActivityData();
   },
 
   /**
@@ -63,7 +69,86 @@ Page({
       }
     }, 800);
   },
+  
+ /**
+   * 获取用户身份信息
+   * 实际项目中应从服务器获取用户身份
+   */
+  getUserRole() {
+    // 模拟获取用户身份
+    // 实际项目中应该调用wx.getStorage或wx.login等API获取真实用户身份
+    try {
+      // 尝试从本地存储获取用户身份
+      const userInfo = wx.getStorageSync('userInfo');
+      if (userInfo) {
+        this.setData({
+          userRole: userInfo.role || 'student'
+        });
+      } else {
+        // 如果没有用户信息，默认设置为普通学生
+        // 实际项目中应该引导用户登录
+        this.setData({
+          userRole: 'student'
+        });
+      }
+    } catch (e) {
+      console.error('获取用户身份失败:', e);
+      // 出错时默认设置为普通学生
+      this.setData({
+        userRole: 'student'
+      });
+    }
+    
+    // 实际项目中应该调用API获取用户身份，示例：
+    /*
+    wx.request({
+      url: 'https://your-api.com/user/role',
+      method: 'GET',
+      success: (res) => {
+        if (res.data.success) {
+          this.setData({
+            userRole: res.data.role
+          });
+        }
+      },
+      fail: (err) => {
+        console.error('获取用户身份失败:', err);
+      }
+    });
+    */
+  },
 
+  /**
+   * 检查用户是否有创建活动的权限
+   * @returns {boolean} 是否有权限
+   */
+  canCreateActivity() {
+    // 社团管理人员和管理员可以创建活动
+    return this.data.userRole === 'manager' || this.data.userRole === 'admin';
+  },
+
+    /**
+   * 创建活动
+   * 只有社团管理人员和管理员可以创建活动
+   */
+  createActivity() {
+    // 再次检查权限，确保安全
+    if (!this.canCreateActivity()) {
+      wx.showToast({
+        title: '您没有创建活动的权限',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+    
+    // 有权限，跳转到创建活动页面
+    wx.navigateTo({
+      url: '/pages/create-activity/create-activity'
+    });
+  }
+})
+  
   /**
    * 生成模拟大学社团活动数据
    * 实际项目中应删除此方法，使用真实API数据
