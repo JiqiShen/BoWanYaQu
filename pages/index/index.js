@@ -9,8 +9,29 @@ Page({
       { id: 1, url: "/assets/banners/b1.png" },
       { id: 2, url: "/assets/banners/b2.png" },
       { id: 3, url: "/assets/banners/b3.png" }
+    ],
+    clubsToShow: [
+      '篮球社', '足球社', '音乐社',
+      '舞蹈社', '摄影社', '文学社',
+      '志愿者协会', '辩论社', '动漫社', '科创社'
     ]
   },
+  // “更多” 按钮点击
+  onTapMore() {
+    console.log('onTapMore clicked');
+    wx.switchTab({
+      url: '/pages/activity-list/activity-list'
+    });
+  },
+
+  // 点击社团卡片
+  onTapClub(e) {
+    const clubName = e.currentTarget.dataset.club;
+    wx.switchTab({
+      url: `/pages/activity-list/activity-list?club=${encodeURIComponent(clubName)}`
+    });
+  },
+
   onTapBanner(e) {
     const id = e.currentTarget.dataset.id
     console.log('tap banner', id)
