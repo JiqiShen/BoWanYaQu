@@ -1,10 +1,25 @@
 {
-  "usingComponents": {},
+  // 页面组件配置
+  "usingComponents": {
+    // 这里可以引入第三方或自定义组件
+    // 例如: "van-button": "@vant/weapp/button/index"
+  },
+  
+  // 启用下拉刷新功能
   "enablePullDownRefresh": true,
+  
+  // 页面背景颜色
   "backgroundColor": "#f9f2f2",
+  
+  // 下拉刷新时loading的样式，dark | light
   "backgroundTextStyle": "dark",
+  
+  // 导航栏背景颜色
   "navigationBarBackgroundColor": "#d81e06",
+  
+  // 导航栏标题文字内容
   "navigationBarTitleText": "社团活动",
-  "navigationBarTextStyle": "white",
-  "navigationStyle":"custom"
+  
+  // 导航栏标题颜色，仅支持 black/white
+  "navigationBarTextStyle": "white"
 }
