@@ -4,7 +4,10 @@
     "pages/activity-list/activity-list",
     "pages/calendar/calendar",
     "pages/account/account",
-    "pages/activity-detail/activity-detail"
+    "pages/activity-detail/activity-detail",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/activity-edit/activity-edit"
   ],
   "window": {
     "navigationBarTitleText": "Hello World"
