@@ -370,8 +370,15 @@
 
   <!-- 创建活动悬浮按钮 -->
   <!-- 固定定位在页面右下角 -->
-  <view class="floating-btn" bindtap="createActivity">
+  <view class="floating-btn" 
+        wx:if="{{userRole === 'manager' || userRole === 'admin'}}" 
+        bindtap="createActivity">
     <text class="btn-text">+</text>
     <text class="btn-label">发布活动</text>
+  </view>
+
+ <!-- 普通学生提示信息 -->
+  <view class="student-tip" wx:if="{{userRole === 'student'}}">
+    <text class="tip-text">想发布活动？请联系社团管理人员</text>
   </view>
 </view>
