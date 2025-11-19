@@ -557,6 +557,26 @@
   transition: all 0.3s ease;   /* 过渡动画 */
 }
 
+/* 普通学生提示信息 */
+.student-tip {
+  position: fixed;
+  right: 40rpx;
+  bottom: 120rpx;
+  background: rgba(153, 153, 153, 0.9);
+  color: #fff;
+  border-radius: 30rpx;
+  padding: 16rpx 24rpx;
+  font-size: 24rpx;
+  max-width: 300rpx;
+  text-align: center;
+  z-index: 999;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  line-height: 1.4;
+}
+
 /* 悬浮按钮点击效果 */
 .floating-btn:active {
   transform: scale(0.95);      /* 缩放效果 */
