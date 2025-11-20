@@ -1,1 +1,169 @@
 /* pages/calendar/calendar.wxss */
+.calendar-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 日历头部样式 */
+.calendar-header {
+  background: linear-gradient(135deg, #1890ff 0%, #52c41a 100%);
+  color: white;
+  padding: 20rpx 30rpx;
+}
+
+.header-title {
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.title-text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.view-switcher {
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.view-item {
+  padding: 12rpx 24rpx;
+  margin: 0 10rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+}
+
+.view-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 星期标题样式 */
+.week-header {
+  display: flex;
+  background-color: white;
+}
+
+.weekday {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+}
+
+.weekday:nth-child(1),
+.weekday:nth-child(7) {
+  color: #ff4d4f;
+}
+
+.calendar-days {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+}
+
+.day-item {
+  width: 13.7%;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8rpx;
+  margin: 2rpx;
+  position: relative;
+}
+
+.day-item.current-month {
+  color: #333;
+}
+
+.day-item.other-month {
+  color: #ccc;
+}
+
+.day-item.today {
+  background-color: #e6f7ff;
+}
+
+.day-item.selected {
+  background-color: #1890ff;
+  color: white;
+}
+
+.day-number {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+/* 活动标记样式 */
+.activity-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: #1890ff;
+}
+
+.activity-dot.has-activities {
+  background-color: #52c41a;
+}
+
+/* 周视图样式 */
+.calendar-week-view {
+  background-color: white;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.week-indicator {
+  text-align: center;
+  padding: 20rpx;
+  background-color: #1890ff;
+  color: white;
+}
+
+.week-days {
+  display: flex;
+  flex-direction: column;
+}
+
+.week-day {
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.week-day-header {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.week-activities {
+  padding: 20rpx;
+}
+
+/* 活动列表样式 */
+.activities-section {
+  background-color: white;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.activities-list {
+  padding: 20rpx;
+}
