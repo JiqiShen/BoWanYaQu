@@ -1,0 +1,132 @@
+<!-- pages/publish-activity/publish-activity.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">发布社团活动</text>
+  </view>
+  
+  <form bindsubmit="onFormSubmit">
+    <!-- 活动名称 -->
+    <view class="form-item">
+      <text class="label">活动名称</text>
+      <input 
+        name="name" 
+        class="input" 
+        placeholder="请输入活动名称" 
+        value=""
+      />
+    </view>
+    
+    <!-- 活动时间 -->
+    <view class="form-item">
+      <text class="label">活动时间</text>
+      <view class="time-picker-container">
+        <view class="time-section">
+          <text class="time-label">开始时间</text>
+          <view class="time-input-group">
+            <picker 
+              mode="date" 
+              value="{{startDate}}" 
+              bindchange="onStartDateChange"
+              class="date-picker"
+            >
+              <view class="picker-text">{{startDate || '选择日期'}}</view>
+            </picker>
+            <picker 
+              mode="time" 
+              value="{{startTime}}" 
+              bindchange="onStartTimeChange"
+              class="time-picker"
+            >
+              <view class="picker-text">{{startTime || '选择时间'}}</view>
+            </picker>
+          </view>
+        </view>
+        
+        <view class="time-section">
+          <text class="time-label">结束时间</text>
+          <view class="time-input-group">
+            <picker 
+              mode="date" 
+              value="{{endDate}}" 
+              bindchange="onEndDateChange"
+              class="date-picker"
+            >
+              <view class="picker-text">{{endDate || '选择日期'}}</view>
+            </picker>
+            <picker 
+              mode="time" 
+              value="{{endTime}}" 
+              bindchange="onEndTimeChange"
+              class="time-picker"
+            >
+              <view class="picker-text">{{endTime || '选择时间'}}</view>
+            </picker>
+          </view>
+        </view>
+        
+        <!-- 显示完整时间 -->
+        <view class="full-time-display" wx:if="{{startDate && startTime && endDate && endTime}}">
+          <text class="full-time-text">{{formatFullTime()}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 活动地点 -->
+    <view class="form-item">
+      <text class="label">活动地点</text>
+      <input 
+        name="location" 
+        class="input" 
+        placeholder="请输入活动地点" 
+        value=""
+      />
+    </view>
+    
+    <!-- 活动标签 -->
+    <view class="form-item">
+      <text class="label">活动标签</text>
+      <input 
+        name="tags" 
+        class="input" 
+        placeholder="用逗号分隔，例如：文学,读书会,推理" 
+        value=""
+      />
+    </view>
+    
+    <!-- 活动详情 -->
+    <view class="form-item">
+      <text class="label">活动详情</text>
+      <textarea 
+        name="detail" 
+        class="textarea" 
+        placeholder="请输入活动详情" 
+        value=""
+      ></textarea>
+    </view>
+    
+    <!-- 活动人数 -->
+    <view class="form-item">
+      <text class="label">活动总人数</text>
+      <input 
+        name="totalCount" 
+        class="input" 
+        type="number" 
+        placeholder="请输入活动总人数" 
+        value=""
+      />
+    </view>
+    
+    <!-- AI快速填写入口 -->
+    <view class="ai-section">
+      <view class="ai-button" bindtap="onAIAssistTap">
+        <text class="ai-icon">⚡</text>
+        <text class="ai-text">AI快速填写</text>
+      </view>
+    </view>
+    
+    <!-- 发布按钮 -->
+    <view class="button-container">
+      <button class="publish-button" form-type="submit">发布活动</button>
+    </view>
+  </form>
+</view>

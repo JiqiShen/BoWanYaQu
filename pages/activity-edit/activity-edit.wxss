@@ -1,0 +1,163 @@
+/* pages/publish-activity/publish-activity.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #d81e06;
+}
+
+.form-item {
+  margin-bottom: 40rpx;
+  padding: 0 20rpx;
+}
+
+.label {
+  display: block;
+  font-size: 30rpx;
+  color: #333333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: #d81e06;
+}
+
+.textarea {
+  width: 100%;
+  height: 200rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.textarea:focus {
+  border-color: #d81e06;
+}
+
+/* 时间选择器样式 */
+.time-picker-container {
+  width: 100%;
+}
+
+.time-section {
+  margin-bottom: 30rpx;
+}
+
+.time-label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 15rpx;
+}
+
+.time-input-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-picker, .time-picker {
+  width: 48%;
+}
+
+.picker-text {
+  height: 80rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.picker-text:active {
+  background-color: #f0f0f0;
+}
+
+.full-time-display {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background-color: #fef2f2;
+  border-radius: 10rpx;
+  border-left: 4rpx solid #d81e06;
+}
+
+.full-time-text {
+  font-size: 26rpx;
+  color: #d81e06;
+  font-weight: 500;
+}
+
+.ai-section {
+  margin: 50rpx 0;
+  text-align: center;
+}
+
+.ai-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 20rpx 40rpx;
+  background-color: #fef2f2;
+  border: 2rpx dashed #d81e06;
+  border-radius: 50rpx;
+  color: #d81e06;
+  font-size: 28rpx;
+}
+
+.ai-icon {
+  margin-right: 10rpx;
+  font-size: 32rpx;
+}
+
+.ai-text {
+  font-weight: 500;
+}
+
+.button-container {
+  margin-top: 60rpx;
+  padding: 0 20rpx;
+}
+
+.publish-button {
+  width: 100%;
+  height: 90rpx;
+  background-color: #d81e06;
+  color: white;
+  border-radius: 45rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.publish-button:active {
+  background-color: #b71c1c;
+}
