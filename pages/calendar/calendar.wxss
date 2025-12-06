@@ -12,8 +12,16 @@
 }
 
 .header-title {
-  text-align: center;
-  margin-bottom: 20rpx;
+  justify-content: space-between;  /* 使左按钮和右按钮分别靠左和靠右 */
+  align-items: center;  /* 垂直居中对齐 */
+  display: flex;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* 使标题和日期居中 */
+  flex-grow: 1;  /* 让标题区域占据可用空间 */
 }
 
 .title-text {
@@ -24,6 +32,13 @@
 .subtitle {
   font-size: 28rpx;
   opacity: 0.9;
+}
+
+.title-btn {
+  color: black;
+  border: none;
+  font-size: 30rpx;
+  cursor: pointer;
 }
 
 .view-switcher {
@@ -42,6 +57,8 @@
 .view-item.active {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+
 
 /* 星期标题样式 */
 .week-header {
@@ -102,48 +119,20 @@
 
 /* 活动标记样式 */
 .activity-dot {
-  width: 8rpx;
-  height: 8rpx;
+  width: 10rpx;
+  height: 10rpx;
   border-radius: 50%;
-  background-color: #1890ff;
+  background-color: #ffffff00;
 }
 
 .activity-dot.has-activities {
+  width: 11rpx;
+  height: 11rpx;
   background-color: #52c41a;
 }
 
-/* 周视图样式 */
-.calendar-week-view {
-  background-color: white;
-  margin: 20rpx;
-  border-radius: 16rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
-}
-
-.week-indicator {
-  text-align: center;
-  padding: 20rpx;
-  background-color: #1890ff;
-  color: white;
-}
-
-.week-days {
-  display: flex;
-  flex-direction: column;
-}
-
-.week-day {
-  padding: 20rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.week-day-header {
-  font-size: 30rpx;
-  font-weight: bold;
-}
-
-.week-activities {
-  padding: 20rpx;
+.activity-dot.selected {
+  background-color: #ffffff;
 }
 
 /* 活动列表样式 */
@@ -154,9 +143,21 @@
   box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
 }
 
-.section-header {
-  padding: 30rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+.activity-info {
+  padding: 30rpx;              /* 内边距 */
+}
+
+.activity-title {
+  flex: 1;                     /* 占据剩余空间 */
+  font-size: 32rpx;            /* 字体大小 */
+  font-weight: 600;            /* 字体粗细 */
+  color: #333;                 /* 字体颜色 */
+  line-height: 1.4;            /* 行高 */
+  margin-right: 20rpx;         /* 右侧外边距 */
+  display: -webkit-box;        /* 弹性盒子 */
+  -webkit-line-clamp: 2;       /* 限制两行 */
+  -webkit-box-orient: vertical;  /* 垂直方向 */
+  overflow: hidden;             /* 隐藏溢出内容 */
 }
 
 .section-title {
@@ -166,4 +167,15 @@
 
 .activities-list {
   padding: 20rpx;
+}
+
+.empty-day-wrapper {
+  display: flex;
+  padding: 20rpx 30rpx;
+}
+
+.empty-day {
+  text-align: center;
+  font-size: 32rpx;
+  color: black;
 }
