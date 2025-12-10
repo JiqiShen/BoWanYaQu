@@ -11,9 +11,17 @@ Page({
       { id: 3, url: "/assets/banners/b3.png" }
     ],
     clubsToShow: [
-      '篮球社', '足球社', '音乐社',
-      '舞蹈社', '摄影社', '文学社',
-      '志愿者协会', '辩论社', '动漫社', '科创社'
+      { name: '篮球社', logo: '/assets/clubs/bkb.jpg' },
+      { name: '足球社', logo: '/assets/clubs/football.jpg' },
+      { name: '音乐社', logo: '/assets/clubs/music.jpg' },
+      { name: '舞蹈社', logo: '/assets/clubs/dance.jpg' },
+      { name: '摄影社', logo: '/assets/clubs/photo.jpg' },
+      { name: '文学社', logo: '/assets/clubs/wenxue.jpg' },
+      { name: '志愿者协会', logo: '/assets/clubs/volunteer.jpg' },
+      { name: '辩论社', logo: '/assets/clubs/arg.jpg' },
+      { name: '动漫社', logo: '/assets/clubs/anime.jpg' },
+      { name: '科创社', logo: '/assets/clubs/sci.jpg' },
+      { name: '美术社', logo: '/assets/clubs/art.jpg' },
     ]
   },
   // “更多” 按钮点击
@@ -27,8 +35,8 @@ Page({
   // 点击社团卡片
   onTapClub(e) {
     const clubName = e.currentTarget.dataset.club;
-    wx.switchTab({
-      url: `/pages/activity-list/activity-list?club=${encodeURIComponent(clubName)}`
+    wx.navigateTo({
+      url: `/pages/club/club?club=${encodeURIComponent(clubName)}`
     });
   },
 

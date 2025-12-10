@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/club/club",
     "pages/activity-list/activity-list",
     "pages/calendar/calendar",
     "pages/account/account",

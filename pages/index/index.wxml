@@ -48,10 +48,10 @@
                show-scrollbar="false">
       <view class="club-list">
         <block wx:for="{{clubsToShow}}" wx:key="*this">
-          <view class="club-item" data-club="{{item}}"
+          <view class="club-item" data-club="{{item.name}}"
             bindtap="onTapClub">
-            <image class="club-img" src="/assets/clubs/testing.JPG" mode="aspectFill" />
-            <text class="club-name">{{item}}</text>
+            <image class="club-img" src="{{item.logo}}" mode="aspectFill" />
+            <text class="club-name">{{item.name}}</text>
           </view>
         </block>
       </view>

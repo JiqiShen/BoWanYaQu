@@ -1,0 +1,214 @@
+/* pages/club-detail/club-detail.wxss */
+.club-detail-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 16px;
+  color: #999;
+}
+
+.content {
+  padding: 20rpx;
+}
+
+/* 头部样式 */
+.club-header {
+  background: linear-gradient(135deg, #ff6b6b 0%, #d81e06 100%);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  color: white;
+}
+
+.club-basic {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.club-logo {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  border: 4rpx solid white;
+}
+
+.club-title {
+  flex: 1;
+}
+
+.club-name {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.club-leader {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.club-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+}
+
+/* 信息卡片 */
+.info-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.info-item {
+  margin-bottom: 20rpx;
+  display: flex;
+}
+
+.info-label {
+  color: #666;
+  font-size: 28rpx;
+  min-width: 160rpx;
+}
+
+.info-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.action-buttons button {
+  flex: 1;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  padding: 20rpx 0;
+}
+
+.join-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #d81e06 100%);
+  color: white;
+}
+
+.quit-btn {
+  background: #ff6b6b;
+  color: white;
+}
+
+.contact-btn {
+  background: #f8f9fa;
+  color: #333;
+}
+
+/* 部分样式 */
+.section {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.more {
+  font-size: 26rpx;
+  color: #d81e06;
+}
+
+/* 活动列表 */
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.activity-item {
+  border-left: 6rpx solid #d81e06;
+  padding-left: 20rpx;
+}
+
+.activity-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  color: #333;
+}
+
+.activity-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+
+.activity-participants {
+  font-size: 24rpx;
+  color: #d81e06;
+}
+
+/* 成员列表 */
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+}
+
+.member-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.member-info {
+  flex: 1;
+}
+
+.member-name {
+  display: block;
+  font-size: 28rpx;
+  margin-bottom: 5rpx;
+}
+
+.member-role {
+  font-size: 24rpx;
+  color: #666;
+}

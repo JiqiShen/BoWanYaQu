@@ -1,0 +1,95 @@
+<!-- pages/club-detail/club-detail.wxml -->
+<view class="club-detail-container">
+  <!-- 加载状态 -->
+  <view wx:if="{{isLoading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 内容区域 -->
+  <view wx:else class="content">
+    <!-- 社团头部信息 -->
+    <view class="club-header">
+      <view class="club-basic">
+        <image wx:if="{{clubInfo.logo}}" src="{{clubInfo.logo}}" class="club-logo"></image>
+        <view class="club-title">
+          <text class="club-name">{{clubName}}</text>
+          <text class="club-leader">社长：{{clubInfo.leader}}</text>
+        </view>
+      </view>
+      
+      <!-- 标签 -->
+      <view class="club-tags">
+        <block wx:for="{{clubInfo.tags}}" wx:key="index">
+          <text class="tag">{{item}}</text>
+        </block>
+      </view>
+    </view>
+
+    <!-- 社团信息 -->
+    <view class="info-card">
+      <view class="info-item">
+        <text class="info-label">社团简介：</text>
+        <text class="info-value">{{clubInfo.description}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">成立时间：</text>
+        <text class="info-value">{{clubInfo.foundedDate}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">成员人数：</text>
+        <text class="info-value">{{clubInfo.memberCount}}人</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button 
+        class="{{isJoined ? 'quit-btn' : 'join-btn'}}" 
+        bindtap="toggleJoin"
+      >
+        {{isJoined ? '已加入' : '加入社团'}}
+      </button>
+      <button class="contact-btn" bindtap="contactClub">联系社团</button>
+    </view>
+
+    <!-- 活动列表 -->
+    <view class="section">
+      <view class="section-title">
+        <text>近期活动</text>
+        <text class="more">查看全部 ></text>
+      </view>
+      
+      <view class="activities-list">
+        <block wx:for="{{activities}}" wx:key="id">
+          <view class="activity-item" bindtap="viewActivity" data-id="{{item.id}}">
+            <text class="activity-title">{{item.title}}</text>
+            <view class="activity-info">
+              <text class="activity-time">{{item.date}} {{item.time}}</text>
+              <text class="activity-location">{{item.location}}</text>
+            </view>
+            <text class="activity-participants">{{item.participants}}人参加</text>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 核心成员 -->
+    <view class="section">
+      <view class="section-title">
+        <text>核心成员</text>
+      </view>
+      
+      <view class="members-list">
+        <block wx:for="{{members}}" wx:key="id">
+          <view class="member-item">
+            <image src="{{item.avatar}}" class="member-avatar"></image>
+            <view class="member-info">
+              <text class="member-name">{{item.name}}</text>
+              <text class="member-role">{{item.role}}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>
