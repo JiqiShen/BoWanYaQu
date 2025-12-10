@@ -12,7 +12,13 @@
 
   <!-- 最新活动 -->
   <view class="section">
-    <view class="h-title">最新活动</view>
+    <view class="row space-between">
+        <text class="h-title">最新活动</text>
+        <button class="section-more" plain size="mini"
+          bindtap="onTapMore">
+          更多 ›
+        </button>
+    </view>
     <view class="card" style="background:#f1a9a0;">
       <view class="row space-between">
         <text>社团纳新宣讲</text>
@@ -36,10 +42,19 @@
   <!-- 关注的社团 -->
   <view class="section">
     <view class="h-title">关注的社团</view>
-    <view class="grid">
-      <view class="square" style="background:#f1a9a0;"></view>
-      <view class="square" style="background:#fbf3a3;"></view>
-      <view class="square" style="background:#bff4b9;"></view>
-    </view>
+    <scroll-view class="club-scroll"
+               scroll-x="true"
+               enable-flex="true"
+               show-scrollbar="false">
+      <view class="club-list">
+        <block wx:for="{{clubsToShow}}" wx:key="*this">
+          <view class="club-item" data-club="{{item}}"
+            bindtap="onTapClub">
+            <image class="club-img" src="/assets/clubs/testing.JPG" mode="aspectFill" />
+            <text class="club-name">{{item}}</text>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
   </view>
 </scroll-view>

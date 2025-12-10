@@ -1,2 +1,79 @@
-<!--pages/calendar/calendar.wxml-->
-<text>pages/calendar/calendar.wxml</text>
+<!-- pages/calendar/calendar.wxml -->
+<view class="calendar-page">
+  <!-- 日历头部 -->
+  <view class="calendar-header">
+    <view class="header-title">
+      <button class="title-btn" bindtap="onPrevMonth">
+        <text>←</text>
+      </button>
+      <view class="title-wrapper">
+        <text class="title-text">活动日历</text>
+        <text class="subtitle">{{year}}年{{month}}月</text>
+      </view>
+      <button class="title-btn" bindtap="onNextMonth">
+        <text>→</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 月视图 -->
+  <view class="calendar-month-view">
+    <!-- 星期标题 -->
+    <view class="week-header">
+      <view class="weekday" wx:for="{{['日', '一', '二', '三', '四', '五', '六']}}">
+        <text>{{item}}</text>
+      </view>
+    </view>
+    
+    <!-- 日历日期 -->
+    <view class="calendar-days">
+      <view 
+        class="day-item {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.isToday ? 'today' : ''}} {{item.date === selectedDate ? 'selected' : ''}}"
+        wx:for="{{calendarDays}}"
+        wx:key="date"
+        data-date="{{item.date}}"
+        bindtap="onDateSelect"
+      >
+        <text class="day-number">{{item.day}}</text>
+        <text>{{getActivitiesCount(item.date)}}</text>
+        <!-- 活动标记 -->
+        <view 
+          class="activity-dot {{item.activitiesCount > 0 ? 'has-activities' : ''}} {{item.date === selectedDate ? 'selected' : ''}}"
+        >
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 活动列表 -->
+  <view class="activities-section">
+    <view class="activities-list" wx:if="{{todayActivities.length > 0}}">
+      <view 
+        class="activity-card"
+        wx:for="{{todayActivities}}"
+        wx:key="id"
+        wx:for-item="activity"
+        bindtap="onGoToActivityDetail"
+      >
+        <view class="activity-info">
+          <text class="activity-title">{{activity.title}}</text>
+          <text class="activity-location">{{activity.location}} {{activity.startTime}}-{{activity.endTime}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 空状态 -->
+    <view class="empty-day-wrapper" wx:if="{{todayActivities.length === 0}}">
+      <text class="empty-day">该日期暂无活动</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <button class="" bindtap="onToday">
+    <text>回到今天</text>
+  </button>
+
+  <button class="" bindtap="onTodayList">
+    <text>今日活动详情列表</text>
+  </button>
+</view>
