@@ -1,20 +1,28 @@
 <!--pages/activity-list/activity-list.wxml-->
+
+<!-- 页面容器 -->
 <view class="activity-page">
-  <!-- 搜索框 -->
+  
+  <!-- 搜索区域 -->
+  <!-- 包含搜索输入框，用户可以输入关键词搜索活动 -->
   <view class="search-section">
     <view class="search-container">
+      <!-- 搜索输入框 -->
       <input 
         class="search-input" 
         placeholder="搜索活动名称、社团或地点" 
         value="{{searchKeyword}}"
         bindinput="onSearch"
       />
+      <!-- 搜索图标 -->
       <view class="search-icon">🔍</view>
     </view>
   </view>
 
   <!-- 筛选栏 -->
+  <!-- 包含所有筛选条件，可以展开和收起 -->
   <view class="filter-section">
+    <!-- 筛选标题栏，点击可以展开/收起筛选条件 -->
     <view class="filter-header" bindtap="toggleFilter">
       <text class="filter-title">筛选条件</text>
       <view class="filter-toggle {{filterExpanded ? 'expanded' : ''}}">
@@ -23,47 +31,15 @@
       </view>
     </view>
     
-    <!-- 展开的筛选条件 -->
+    <!-- 筛选条件内容区域 -->
+    <!-- 根据filterExpanded状态显示或隐藏 -->
     <view class="filter-content {{filterExpanded ? 'expanded' : ''}}">
-      <!-- 活动状态筛选 -->
-      <view class="filter-group">
-        <text class="filter-label">活动状态</text>
-        <view class="filter-options">
-          <view 
-            class="filter-option {{filterStatus === 'all' ? 'active' : ''}}" 
-            data-status="all"
-            bindtap="selectStatus"
-          >
-            全部
-          </view>
-          <view 
-            class="filter-option {{filterStatus === 'ongoing' ? 'active' : ''}}" 
-            data-status="ongoing"
-            bindtap="selectStatus"
-          >
-            进行中
-          </view>
-          <view 
-            class="filter-option {{filterStatus === 'upcoming' ? 'active' : ''}}" 
-            data-status="upcoming"
-            bindtap="selectStatus"
-          >
-            未开始
-          </view>
-          <view 
-            class="filter-option {{filterStatus === 'ended' ? 'active' : ''}}" 
-            data-status="ended"
-            bindtap="selectStatus"
-          >
-            已结束
-          </view>
-        </view>
-      </view>
       
-      <!-- 活动类型筛选 -->
+      <!-- 活动类型筛选组 -->
       <view class="filter-group">
         <text class="filter-label">活动类型</text>
         <view class="filter-options">
+          <!-- 全部选项 -->
           <view 
             class="filter-option {{filterType === 'all' ? 'active' : ''}}" 
             data-type="all"
@@ -71,40 +47,123 @@
           >
             全部
           </view>
+          <!-- 讲座选项 -->
           <view 
-            class="filter-option {{filterType === 'sports' ? 'active' : ''}}" 
-            data-type="sports"
+            class="filter-option {{filterType === 'lecture' ? 'active' : ''}}" 
+            data-type="lecture"
             bindtap="selectType"
           >
-            体育竞技
+            讲座
           </view>
+          <!-- 户外选项 -->
           <view 
-            class="filter-option {{filterType === 'art' ? 'active' : ''}}" 
-            data-type="art"
+            class="filter-option {{filterType === 'outdoor' ? 'active' : ''}}" 
+            data-type="outdoor"
             bindtap="selectType"
           >
-            文艺表演
+            户外
           </view>
+          <!-- 其他选项 -->
           <view 
-            class="filter-option {{filterType === 'academic' ? 'active' : ''}}" 
-            data-type="academic"
+            class="filter-option {{filterType === 'other' ? 'active' : ''}}" 
+            data-type="other"
             bindtap="selectType"
           >
-            学术讲座
-          </view>
-          <view 
-            class="filter-option {{filterType === 'volunteer' ? 'active' : ''}}" 
-            data-type="volunteer"
-            bindtap="selectType"
-          >
-            志愿服务
+            其他
           </view>
         </view>
       </view>
       
-      <!-- 日期筛选 -->
+      <!-- 参与人员筛选组 -->
+      <view class="filter-group">
+        <text class="filter-label">参与人员</text>
+        <view class="filter-options">
+          <!-- 全部选项 -->
+          <view 
+            class="filter-option {{filterAudience === 'all' ? 'active' : ''}}" 
+            data-audience="all"
+            bindtap="selectAudience"
+          >
+            全部
+          </view>
+          <!-- 社员选项 -->
+          <view 
+            class="filter-option {{filterAudience === 'member' ? 'active' : ''}}" 
+            data-audience="member"
+            bindtap="selectAudience"
+          >
+            社员
+          </view>
+          <!-- 所有人选项 -->
+          <view 
+            class="filter-option {{filterAudience === 'everyone' ? 'active' : ''}}" 
+            data-audience="everyone"
+            bindtap="selectAudience"
+          >
+            所有人
+          </view>
+          <!-- 可参加选项 -->
+          <view 
+            class="filter-option {{filterAudience === 'available' ? 'active' : ''}}" 
+            data-audience="available"
+            bindtap="selectAudience"
+          >
+            可参加
+          </view>
+        </view>
+      </view>
+      
+      <!-- 活动人数筛选组 -->
+      <view class="filter-group">
+        <text class="filter-label">活动人数</text>
+        <view class="filter-options">
+          <!-- 全部选项 -->
+          <view 
+            class="filter-option {{filterPeople === 'all' ? 'active' : ''}}" 
+            data-people="all"
+            bindtap="selectPeople"
+          >
+            全部
+          </view>
+          <!-- 20人以内选项 -->
+          <view 
+            class="filter-option {{filterPeople === '20' ? 'active' : ''}}" 
+            data-people="20"
+            bindtap="selectPeople"
+          >
+            20人以内
+          </view>
+          <!-- 20-50人选项 -->
+          <view 
+            class="filter-option {{filterPeople === '20-50' ? 'active' : ''}}" 
+            data-people="20-50"
+            bindtap="selectPeople"
+          >
+            20-50人
+          </view>
+          <!-- 50-100人选项 -->
+          <view 
+            class="filter-option {{filterPeople === '50-100' ? 'active' : ''}}" 
+            data-people="50-100"
+            bindtap="selectPeople"
+          >
+            50-100人
+          </view>
+          <!-- 100人以上选项 -->
+          <view 
+            class="filter-option {{filterPeople === '100+' ? 'active' : ''}}" 
+            data-people="100+"
+            bindtap="selectPeople"
+          >
+            100人以上
+          </view>
+        </view>
+      </view>
+      
+      <!-- 活动日期筛选组 -->
       <view class="filter-group">
         <text class="filter-label">活动日期</text>
+        <!-- 日期选择器 -->
         <picker 
           mode="date" 
           value="{{filterDate}}" 
@@ -116,6 +175,37 @@
         </picker>
       </view>
       
+      <!-- 活动地址筛选组 -->
+      <view class="filter-group">
+        <text class="filter-label">活动地址</text>
+        <view class="filter-options">
+          <!-- 全部选项 -->
+          <view 
+            class="filter-option {{filterLocation === 'all' ? 'active' : ''}}" 
+            data-location="all"
+            bindtap="selectLocation"
+          >
+            全部
+          </view>
+          <!-- 校内选项 -->
+          <view 
+            class="filter-option {{filterLocation === 'campus' ? 'active' : ''}}" 
+            data-location="campus"
+            bindtap="selectLocation"
+          >
+            校内
+          </view>
+          <!-- 校外选项 -->
+          <view 
+            class="filter-option {{filterLocation === 'offcampus' ? 'active' : ''}}" 
+            data-location="offcampus"
+            bindtap="selectLocation"
+          >
+            校外
+          </view>
+        </view>
+      </view>
+      
       <!-- 重置按钮 -->
       <view class="filter-actions">
         <view class="reset-btn" bindtap="resetFilters">重置筛选</view>
@@ -123,36 +213,75 @@
     </view>
   </view>
 
-  <!-- 活动列表 -->
+  <!-- 活动列表区域 -->
   <view class="activity-list-section">
+    
     <!-- 加载状态 -->
+    <!-- 当loading为true时显示加载动画 -->
     <view class="loading-container" wx:if="{{loading}}">
       <view class="loading-spinner"></view>
       <text class="loading-text">加载中...</text>
     </view>
     
     <!-- 活动列表 -->
+    <!-- 当不在加载状态时显示活动列表 -->
     <view class="activity-list" wx:else>
+      <!-- 循环渲染活动列表 -->
       <block wx:for="{{activityList}}" wx:key="id">
+        
+        <!-- 单个活动项 -->
+        <!-- 点击跳转到活动详情页 -->
         <view class="activity-item" bindtap="goToActivityDetail" data-id="{{item.id}}">
-          <!-- 活动封面和状态 -->
+          
+          <!-- 活动封面和状态区域 -->
           <view class="activity-cover-container">
+            <!-- 活动封面图片 -->
             <image class="activity-cover" src="{{item.coverImage}}" mode="aspectFill" />
+            
+            <!-- 活动状态标签 -->
             <view class="activity-status {{item.status === '进行中' ? 'ongoing' : item.status === '已结束' ? 'ended' : 'upcoming'}}">
               {{item.status}}
             </view>
+            
+            <!-- 社团标识 -->
             <view class="club-badge">{{item.organizer}}</view>
+            
+            <!-- 可参加标识 -->
+            <!-- 只有isAvailable为true的活动才显示此标识 -->
+            <view class="available-badge" wx:if="{{item.isAvailable}}">可参加</view>
           </view>
           
-          <!-- 活动信息 -->
+          <!-- 活动信息区域 -->
           <view class="activity-info">
+            
+            <!-- 活动标题和类型 -->
             <view class="activity-header">
               <text class="activity-title">{{item.title}}</text>
               <view class="activity-type">{{item.type}}</view>
             </view>
             
-            <view class="activity-description">{{item.description}}</view>
+            <!-- 活动描述 -->
+            <text class="activity-description">{{item.description}}</text>
             
+            <!-- 活动详细信息 -->
+            <!-- 显示活动的参与人员、人数和地址信息 -->
+            <view class="activity-details">
+              <view class="detail-item">
+                <text class="detail-label">参与人员:</text>
+                <text class="detail-value">{{item.audience}}</text>
+              </view>
+              <view class="detail-item">
+                <text class="detail-label">活动人数:</text>
+                <text class="detail-value">{{item.people}}</text>
+              </view>
+              <view class="detail-item">
+                <text class="detail-label">活动地址:</text>
+                <text class="detail-value">{{item.locationType}}</text>
+              </view>
+            </view>
+            
+            <!-- 活动元信息 -->
+            <!-- 显示时间、地点和报名人数 -->
             <view class="activity-meta">
               <view class="meta-item">
                 <text class="meta-icon">🕒</text>
@@ -168,16 +297,11 @@
               </view>
             </view>
             
+            <!-- 活动底部操作区域 -->
             <view class="activity-footer">
               <view class="activity-actions">
-                <view 
-                  class="action-btn contact-btn" 
-                  catchtap="contactOrganizer" 
-                  data-id="{{item.id}}"
-                >
-                  <text class="action-icon">📞</text>
-                  <text class="action-text">联系负责人</text>
-                </view>
+                <!-- 点赞按钮 -->
+                <!-- 使用catchtap阻止事件冒泡 -->
                 <view 
                   class="action-btn like-btn {{item.isLiked ? 'liked' : ''}}" 
                   catchtap="likeActivity" 
@@ -194,6 +318,7 @@
     </view>
     
     <!-- 空状态 -->
+    <!-- 当没有活动数据且不在加载状态时显示 -->
     <view class="empty-state" wx:if="{{!loading && activityList.length === 0}}">
       <image class="empty-image" src="/images/empty-activity.png" />
       <text class="empty-text">暂无社团活动</text>
@@ -202,8 +327,10 @@
   </view>
 
   <!-- 翻页控件 -->
+  <!-- 当有活动数据且不在加载状态时显示 -->
   <view class="pagination-section" wx:if="{{!loading && activityList.length > 0}}">
     <view class="pagination-container">
+      <!-- 上一页按钮 -->
       <view 
         class="page-btn prev-btn {{currentPage === 1 ? 'disabled' : ''}}" 
         bindtap="prevPage"
@@ -211,12 +338,14 @@
         上一页
       </view>
       
+      <!-- 页码信息 -->
       <view class="page-info">
         <text class="current-page">{{currentPage}}</text>
         <text class="page-separator">/</text>
         <text class="total-pages">{{totalPages}}</text>
       </view>
       
+      <!-- 下一页按钮 -->
       <view 
         class="page-btn next-btn {{currentPage === totalPages ? 'disabled' : ''}}" 
         bindtap="nextPage"
@@ -225,6 +354,7 @@
       </view>
     </view>
     
+    <!-- 页码跳转 -->
     <view class="page-jump">
       <input 
         class="jump-input" 
@@ -239,8 +369,16 @@
   </view>
 
   <!-- 创建活动悬浮按钮 -->
-  <view class="floating-btn" bindtap="createActivity">
+  <!-- 固定定位在页面右下角 -->
+  <view class="floating-btn" 
+        wx:if="{{userRole === 'manager' || userRole === 'admin'}}" 
+        bindtap="createActivity">
     <text class="btn-text">+</text>
     <text class="btn-label">发布活动</text>
+  </view>
+
+ <!-- 普通学生提示信息 -->
+  <view class="student-tip" wx:if="{{userRole === 'student'}}">
+    <text class="tip-text">想发布活动？请联系社团管理人员</text>
   </view>
 </view>
