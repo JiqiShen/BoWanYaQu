@@ -126,20 +126,8 @@ Page({
     this.setData({
       activities: [
         {
-          id: 0,
-          title: '人工智能讲座1',
-          date: `${today}`,
-          startTime: `15:00`,
-          endTime: `17:00`,
-          location: '信息科学大楼 101',
-          clubName: 'AI研究社',
-          maxParticipants: 200,
-          currentParticipants: 150,
-          status: 'open'
-        },
-        {
           id: 1,
-          title: '人工智能讲座2',
+          title: '人工智能前沿讲座',
           date: `${today}`,
           startTime: `17:00`,
           endTime: `19:00`,
@@ -147,6 +135,18 @@ Page({
           clubName: 'AI研究社',
           maxParticipants: 200,
           currentParticipants: 150,
+          status: 'open'
+        },
+        {
+          id: 0,
+          title: '武侠·推理联合读书会',
+          date: `${today}`,
+          startTime: `19:00`,
+          endTime: `21:00`,
+          location: '博雅学堂',
+          clubName: '推理协会',
+          maxParticipants: 30,
+          currentParticipants: 19,
           status: 'open'
         },
         {

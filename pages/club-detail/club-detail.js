@@ -1,37 +1,31 @@
-// 活动详情页面逻辑
+// pages/club-detail.js
 Page({
   data: {
-    activityId: null,
+    clubId: 0,
     // 活动数据引用位置，下为示例
-    activityData: {
-      name: "武侠·推理联合读书会",
-      status: "未开始",
-      club:"推理协会",
-      tags: ["文学", "读书会", "推理", "武侠"],
-      detail: "主讲人：亚戈。推荐阅读篇目：温瑞安《四大名捕会京师》中的《凶手》（短篇），欢迎大家的参与！",
-      time: "2025年5月25日 19:00 - 21:00",
-      location: "博雅学堂",
-      registeredCount: 19,
-      totalCount: 30,
-      remainingCount: 11,
+    clubData: {
+      name: "篮球社",
+      tags: ["运动"],
+      detail: "篮球社成立于2005年，是由一群热爱篮球运动的北大学子自发组织的学生社团。我们秉承以球会友，强身健体，追求卓越”的宗旨，致力于为全校师生提供一个专业、友好、充满活力的篮球交流平台",
       isFollowed: false,
-      isRegistered: false
+      isRegistered: false,
+      onGoingActivity: [
+        {
+          name: "2024年春季招新活动",
+          status: "报名中",
+          time: "2025年5月25日 19:00 - 21:00",
+          location: "博雅学堂",
+        }
+      ]
     }
   },
-
   onLoad: function(options) {
-    const activityId = options.activityId;
-    this.setData({
-      activityId: activityId
-    });
+    console.log(options.clubId) // 输出：value2
     
-    // 根据 activityId 获取活动详情数据
-    this.fetchActivityDetail(activityId);
-  },
-  
-  fetchActivityDetail: function(activityId) {
-    // 调用接口获取活动详情
-    console.log('获取活动ID为:', activityId, '的详情数据');
+    // 可以将参数保存到 data 中
+    this.setData({
+      clubId: options.clubId,
+    })
   },
   // 关注活动状态改变
   onFollowChange: function(e) {
@@ -43,7 +37,7 @@ Page({
     // 关注/取消关注功能实现
     if (isFollowed) {
       wx.showToast({
-        title: '已关注活动',
+        title: '已关注社团',
         icon: 'success'
       });
     } else {
@@ -69,7 +63,7 @@ Page({
     
     
     wx.showToast({
-      title: '报名成功',
+      title: '加入成功',
       icon: 'success'
     });
   }

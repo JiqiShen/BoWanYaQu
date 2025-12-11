@@ -15,7 +15,19 @@
       </view>
       <view class="input-item">
         <text class="label">密码</text>
-        <input class="input" type="password" placeholder="请输入密码" placeholder-class="placeholder" bindinput="onPasswordInput" value="{{password}}" />
+        <view class="password-input-container">
+          <input class="input"
+                type="{{showPassword ? 'text' : 'password'}}"
+                placeholder="请输入密码"
+                placeholder-class="placeholder"
+                value="{{password}}"
+                bindinput="onPasswordInput"
+                password="{{!showPassword}}" />
+          <view class="password-toggle" bindtap="togglePasswordVisibility">
+            <image class="toggle-icon" 
+                  src="{{showPassword ? '/images/icon-eye-open.png' : '/images/icon-eye-close.png'}}" />
+          </view>
+        </view>
       </view>
     </view>
 

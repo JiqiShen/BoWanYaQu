@@ -1,12 +1,13 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/activity-list/activity-list",
     "pages/calendar/calendar",
     "pages/account/account",
     "pages/activity-detail/activity-detail",
-    "pages/login/login",
     "pages/register/register",
+    "pages/club-detail/club-detail",
     "pages/activity-edit/activity-edit"
   ],
   "window": {
