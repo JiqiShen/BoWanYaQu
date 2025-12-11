@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/activity-edit/activity-edit",
     "pages/login/login",
     "pages/index/index",
     "pages/activity-list/activity-list",
@@ -8,7 +7,8 @@
     "pages/account/account",
     "pages/activity-detail/activity-detail",
     "pages/register/register",
-    "pages/club-detail/club-detail"
+    "pages/club-detail/club-detail",
+    "pages/activity-edit/activity-edit"
   ],
   "window": {
     "navigationBarTitleText": "博玩雅趣",
