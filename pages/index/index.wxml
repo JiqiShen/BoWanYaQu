@@ -13,28 +13,18 @@
   <!-- 最新活动 -->
   <view class="section">
     <view class="row space-between">
-        <text class="h-title">最新活动</text>
-        <button class="section-more" plain size="mini"
-          bindtap="onTapMore">
-          更多 ›
-        </button>
+      <text class="h-title">最新活动</text>
+      <button class="section-more" plain size="mini" bindtap="onTapMore">
+        更多 ›
+      </button>
     </view>
-    <view class="card" style="background:#f1a9a0;">
+    
+    <view wx:for="{{activityList}}" wx:key="id" class="card" 
+          style="background:{{item.bgColor}}"
+          bindtap="onTapActivity" data-activityId="{{item.id}}">
       <view class="row space-between">
-        <text>社团纳新宣讲</text>
-        <text class="muted">今天 19:00</text>
-      </view>
-    </view>
-    <view class="card" style="background:#f7e28c;">
-      <view class="row space-between">
-        <text>编程马拉松</text>
-        <text class="muted">周五 全天</text>
-      </view>
-    </view>
-    <view class="card" style="background:#bff4b9; border:2rpx solid #4e8cff;">
-      <view class="row space-between">
-        <text>音乐节志愿者</text>
-        <text class="muted">本周末</text>
+        <text>{{item.title}}</text>
+        <text class="muted">{{item.time}}</text>
       </view>
     </view>
   </view>
@@ -47,11 +37,11 @@
                enable-flex="true"
                show-scrollbar="false">
       <view class="club-list">
-        <block wx:for="{{clubsToShow}}" wx:key="*this">
-          <view class="club-item" data-club="{{item}}"
+        <block wx:for="{{clubsToShow}}" wx:key="id">
+          <view class="club-item" data-clubId="{{item.id}}"
             bindtap="onTapClub">
             <image class="club-img" src="/assets/clubs/testing.JPG" mode="aspectFill" />
-            <text class="club-name">{{item}}</text>
+            <text class="club-name">{{item.name}}</text>
           </view>
         </block>
       </view>

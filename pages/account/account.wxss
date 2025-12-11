@@ -1,1 +1,165 @@
 /* pages/account/account.wxss */
+/* 账户页面样式 */
+.account-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 100rpx;
+}
+
+/* 用户信息卡片 */
+.user-card {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  padding: 40rpx 32rpx;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.user-avatar-section {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  margin-right: 24rpx;
+}
+
+.user-basic-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.user-id, .user-department {
+  font-size: 24rpx;
+  opacity: 0.9;
+  margin-bottom: 4rpx;
+}
+
+.user-status {
+  align-self: flex-start;
+}
+
+.status-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+.status-badge.verified {
+  background: rgba(82, 196, 26, 0.9);
+}
+
+.status-badge.unverified {
+  background: rgba(245, 34, 45, 0.9);
+}
+
+/* 信息区域 */
+.info-section, .action-section {
+  background: white;
+  margin: 20rpx 0;
+  padding: 0 32rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 操作项样式 */
+.action-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.action-item:last-child {
+  border-bottom: none;
+}
+
+.action-left {
+  display: flex;
+  align-items: center;
+}
+
+.action-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.action-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.action-arrow {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+/* 底部操作按钮 */
+.bottom-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20rpx 32rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.btn-logout {
+  width: 100%;
+  height: 88rpx;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.btn-logout:active {
+  background: #d9363e;
+}

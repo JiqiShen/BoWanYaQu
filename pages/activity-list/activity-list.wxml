@@ -320,7 +320,6 @@
     <!-- 空状态 -->
     <!-- 当没有活动数据且不在加载状态时显示 -->
     <view class="empty-state" wx:if="{{!loading && activityList.length === 0}}">
-      <image class="empty-image" src="/images/empty-activity.png" />
       <text class="empty-text">暂无社团活动</text>
       <text class="empty-desc">快去创建或关注社团活动吧</text>
     </view>

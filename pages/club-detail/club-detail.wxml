@@ -1,0 +1,46 @@
+<!--pages/club-detail.wxml-->
+<!-- 社团详情页面 -->
+<view class="container">
+
+  <!-- 社团基本信息 -->
+  <view class="section" style="height: 210rpx; display: block; box-sizing: border-box">
+    <!-- 社团名称 -->
+    <view class="title-row">
+      <text class="club-name">{{clubData.name}}</text>
+    </view>
+
+    <!-- 社团标签 -->
+    <view class="tags">
+      <block wx:for="{{clubData.tags}}" wx:key="index">
+        <text class="tag">{{item}}</text>
+      </block>
+    </view>
+  </view>
+
+  <!-- 社团详情 -->
+  <view class="section">
+    <text class="section-title">活动详情</text>
+    <!-- 社团详情内容引用位置 -->
+    <text class="detail-content">{{clubData.detail}}</text>
+  </view>
+
+  <!-- 社团联系人  -->
+  <view class="section">
+    <text class="section-title">活动详情</text>
+    <!-- 社团联系人引用位置 -->
+    <text class="detail-content">{{clubData.contact}}</text>
+  </view>
+
+  <!-- 关注社团 -->
+  <view class="follow-section">
+    <text class="follow-text">关注社团</text>
+    <switch class="follow-switch" checked="{{clubData.isFollowed}}" bindchange="onFollowChange" color="#d32f2f" />
+  </view>
+
+  <!-- 加入按钮 -->
+  <view class="action-buttons">
+    <button class="btn {{clubData.isRegistered ? 'btn-disabled' : 'btn-primary'}}" bindtap="onRegisterTap" disabled="{{clubData.isRegistered}}">
+      {{activityData.isRegistered ? '已加入' : '申请加入'}}
+    </button>
+  </view>
+</view>

@@ -10,7 +10,7 @@ Page({
     activityList: [],
 
     // 用户身份数据 - 标识用户的权限等级
-    userRole: 'student', // 用户身份：student-普通学生, manager-社团管理人员, admin-管理员
+    userRole: 'manager', // 用户身份：student-普通学生, manager-社团管理人员, admin-管理员
     
     // 分页相关数据 - 管理列表的分页状态
     currentPage: 1,      // 当前页码
@@ -55,7 +55,7 @@ Page({
     // 模拟网络请求延迟
     setTimeout(() => {
       // 生成模拟数据
-      const mockData = this.generateMockData();
+      const mockData = this.generateMockData(1);
       
       // 更新页面数据
       this.setData({
@@ -69,7 +69,27 @@ Page({
       }
     }, 800);
   },
-  
+  loadSearchedActivityData() {
+    // 显示加载状态，防止重复请求
+    this.setData({ loading: true });
+    
+    // 模拟网络请求延迟
+    setTimeout(() => {
+      // 生成模拟数据
+      const mockData = this.generateMockData(2);
+      
+      // 更新页面数据
+      this.setData({
+        activityList: mockData,    // 设置活动列表数据
+        loading: false             // 关闭加载状态
+      });
+      
+      // 如果是第一页（下拉刷新），停止刷新动画
+      if (this.data.page === 1) {
+        wx.stopPullDownRefresh();
+      }
+    }, 800);
+  },
  /**
    * 获取用户身份信息
    * 实际项目中应从服务器获取用户身份
@@ -144,24 +164,23 @@ Page({
     
     // 有权限，跳转到创建活动页面
     wx.navigateTo({
-      url: '/pages/create-activity/create-activity'
+      url: '/pages/activity-edit/activity-edit'
     });
-  }
-})
+  },
   
   /**
    * 生成模拟大学社团活动数据
    * 实际项目中应删除此方法，使用真实API数据
    * @returns {Array} 模拟的活动数据数组
    */
-  generateMockData() {
+  generateMockData(option) {
     const activities = [];
-    
+    const searchedActivities = [];
     // 定义活动相关的基础数据选项
     const statusList = ['进行中', '未开始', '已结束'];
     const types = ['讲座', '户外', '其他'];
     const locations = ['体育馆', '学生活动中心', '图书馆报告厅', '操场', '教学楼101', '音乐厅', '美术楼展厅'];
-    const clubs = ['篮球社', '足球社', '音乐社', '舞蹈社', '摄影社', '文学社', '志愿者协会', '辩论社', '动漫社', '科创社'];
+    const clubs = ['算法协会', '足球社', '音乐社', '舞蹈社', '摄影社', '文学社', '志愿者协会', '辩论社', '动漫社', '科创社'];
     const audienceTypes = ['社员', '所有人', '可参加'];
     const locationTypes = ['校内', '校外'];
     
@@ -245,7 +264,6 @@ Page({
         id: i + 1,                            // 活动ID
         title: activitiesData[dataIndex].title,
         description: activitiesData[dataIndex].description,
-        coverImage: '/images/club-activity.jpg',  // 封面图片路径
         startTime: `2024-03-${15 + (i % 15)} 14:00`,  // 开始时间
         endTime: `2024-03-${15 + (i % 15)} 17:00`,    // 结束时间
         location: locations[locationIndex],   // 具体地点
@@ -260,9 +278,33 @@ Page({
         likeCount: Math.floor(Math.random() * 100), // 点赞数
         isAvailable: Math.random() > 0.3      // 是否可参加
       });
+      if (i == 0){
+        searchedActivities.push({
+          id: i + 1,                            // 活动ID
+          title: activitiesData[dataIndex].title,
+          description: activitiesData[dataIndex].description,
+          startTime: `2024-03-${15 + (i % 15)} 14:00`,  // 开始时间
+          endTime: `2024-03-${15 + (i % 15)} 17:00`,    // 结束时间
+          location: locations[locationIndex],   // 具体地点
+          organizer: clubs[clubIndex],          // 主办社团
+          status: statusList[statusIndex],      // 活动状态
+          type: activitiesData[dataIndex].type, // 活动类型
+          audience: activitiesData[dataIndex].audience, // 参与人员要求
+          people: activitiesData[dataIndex].people,     // 活动人数范围
+          locationType: activitiesData[dataIndex].locationType, // 校内/校外
+          participants: Math.floor(Math.random() * 200) + 50, // 已报名人数
+          isLiked: Math.random() > 0.7,         // 是否已点赞
+          likeCount: Math.floor(Math.random() * 100), // 点赞数
+          isAvailable: Math.random() > 0.3      // 是否可参加
+        });
+      }
     }
     
-    return activities;
+    if (option === 1){
+      return activities;
+    }else if (option === 2){
+      return searchedActivities;
+    }
   },
 
   /**
@@ -278,9 +320,12 @@ Page({
       searchKeyword: keyword,
       currentPage: 1
     });
-    
+    if (keyword == null){
+      this.loadActivityData();
+    }else{
+      this.loadSearchedActivityData();
+    }
     // 重新加载数据（实际项目中应调用搜索API）
-    this.loadActivityData();
   },
 
   /**
@@ -523,7 +568,7 @@ Page({
    */
   createActivity() {
     wx.navigateTo({
-      url: '/pages/create-activity/create-activity'
+      url: '/pages/activity-edit/activity-edit'
     });
   }
 })

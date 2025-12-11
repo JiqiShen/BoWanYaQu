@@ -67,5 +67,12 @@ Page({
     wx.navigateTo({
       url: '/pages/register/register',
     });
-  }
+  },
+
+  // 切换密码可见性
+  togglePasswordVisibility: function() {
+    this.setData({
+      showPassword: !this.data.showPassword
+    });
+  },
 });

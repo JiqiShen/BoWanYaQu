@@ -89,3 +89,20 @@
   margin-left: 10rpx;
   font-weight: 500;
 }
+
+.toggle-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.password-input-container {
+  width: 600rpx;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 24rpx;
+  transform: translateY(-100%);
+  width: 60rpx;
+  height: 60rpx;
+}
