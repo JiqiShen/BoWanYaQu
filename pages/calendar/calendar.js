@@ -91,14 +91,24 @@ Page({
 
   // 根据选择日期筛选活动
   filterActivitiesByDate: function(date = null) {
+    console.log('filter date: ' + date);
     const selectedDate = date || this.data.selectedDate;
     const todayActivities = this.data.activities.filter(activity => {
-      const activityDate = activity.date;
+      const activityDate = TimeUtil.formatDate(activity.start_time, 'YYYY-MM-DD');
+      console.log(activityDate);
       return activityDate === selectedDate;
     });
     
     this.setData({
-      todayActivities: todayActivities
+      todayActivities: todayActivities.map(
+        item => {
+          return {
+            ...item,
+            startTime: TimeUtil.formatDate(item.start_time, 'HH:mm'),
+            endTime: TimeUtil.formatDate(item.start_time, 'HH:mm')
+          }
+        }
+      )
     });
   },
 
@@ -123,46 +133,16 @@ Page({
   refreshActivities: function() {
     // call api for events
     const today = new Date().toISOString().split('T')[0];
-    this.setData({
-      activities: [
-        {
-          id: 1,
-          title: '人工智能前沿讲座',
-          date: `${today}`,
-          startTime: `17:00`,
-          endTime: `19:00`,
-          location: '信息科学大楼 102',
-          clubName: 'AI研究社',
-          maxParticipants: 200,
-          currentParticipants: 150,
-          status: 'open'
-        },
-        {
-          id: 0,
-          title: '武侠·推理联合读书会',
-          date: `${today}`,
-          startTime: `19:00`,
-          endTime: `21:00`,
-          location: '博雅学堂',
-          clubName: '推理协会',
-          maxParticipants: 30,
-          currentParticipants: 19,
-          status: 'open'
-        },
-        {
-          id: 2,
-          title: '人工智能讲座3',
-          date: `2025-12-01`,
-          startTime: `15:00`,
-          endTime: `17:00`,
-          location: '信息科学大楼 102',
-          clubName: 'AI研究社',
-          maxParticipants: 200,
-          currentParticipants: 150,
-          status: 'open'
-        }
-      ]
-    });
+    Api.getMyRegistrations({
+      'user_id': wx.getStorageSync('user_id')
+    }).then(
+      data => {
+        console.log(data.data.activities);
+        this.setData({
+          activities: data.data.activities
+        });
+      }
+    );
   },
 
   // ==================== 用户交互事件 ====================
@@ -234,7 +214,7 @@ Page({
     const activityId = e.currentTarget.dataset.id;
     
     wx.navigateTo({
-      url: `/pages/activity-detail/activity-detail?id=${activityId}`
+      url: `/pages/activity-detail/activity-detail?activityId=${activityId}`
     });
   },
 

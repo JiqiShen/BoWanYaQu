@@ -1,3 +1,5 @@
+const Api = require("../../utils/api");
+
 // 活动详情页面逻辑
 Page({
   data: {
@@ -21,12 +23,15 @@ Page({
 
   onLoad: function(options) {
     const activityId = options.activityId;
-    this.setData({
-      activityId: activityId
-    });
-    
-    // 根据 activityId 获取活动详情数据
-    this.fetchActivityDetail(activityId);
+    Api.getActivityDetail(activityId).then(
+      data => {
+        console.log(data.data);
+        this.setData({
+          activityId: activityId,
+          activityData: data.data
+        });
+      }
+    )
   },
   
   fetchActivityDetail: function(activityId) {
@@ -56,18 +61,24 @@ Page({
 
   // 报名按钮点击
   onRegisterTap: function() {
-    if (this.data.activityData.isRegistered) {
+    if (!this.data.activityData.canRegister) {
+      if (this.data.activityData.maxParticipants === this.data.activityData.currentParticipants){
+        wx.showToast({
+          title: '人数已满',
+          icon: 'fail'
+        });
+      }else{
+        wx.showToast({
+          title: '不可报名',
+          icon: 'fail'
+        });
+      }
       return;
     }
-    
+    console.log('activityId:' + this.data.activityData.activity_id);
     // 报名功能实现
-    this.setData({
-      'activityData.isRegistered': true,
-      'activityData.registeredCount': this.data.activityData.registeredCount + 1,
-      'activityData.remainingCount': this.data.activityData.remainingCount - 1
-    });
-    
-    
+    Api.signUpActivity(this.data.activityData.activity_id,
+      { user_id: wx.getStorageSync('user_id') });
     wx.showToast({
       title: '报名成功',
       icon: 'success'

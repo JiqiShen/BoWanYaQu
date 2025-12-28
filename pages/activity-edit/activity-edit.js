@@ -1,16 +1,23 @@
 // pages/publish-activity/publish-activity.js
+const Api = require('../../utils/api.js');
+const TimeUtil = require('../../utils/time.js');
 Page({
   data: {
-    userClub: "", // 用户所属社团
+    userClub: 1, // 用户所属社团
     startDate: "", // 开始日期
     startTime: "", // 开始时间
     endDate: "",   // 结束日期
-    endTime: ""    // 结束时间
+    endTime: "",    // 结束时间
+    name: "",
+    location: "",
+    tags: "",
+    description: "",
+    max_participants: ""
   },
 
   onLoad: function(options) {
     // 页面加载时获取用户所属社团
-    this.getUserClub();
+    //this.getUserClub();
     
     // 设置默认时间为当前时间
     const now = new Date();
@@ -140,12 +147,12 @@ Page({
     
     // 构建活动数据对象
     const activityData = {
-      name: formData.name,
+      title: formData.name,
       time: this.formatFullTime(), // 使用格式化后的时间
       location: formData.location,
       tags: tags,
-      detail: formData.detail,
-      totalCount: parseInt(formData.totalCount),
+      description: formData.detail,
+      max_participants: parseInt(formData.totalCount),
       club: this.data.userClub, // 添加用户所属社团
       status: "未开始",
       registeredCount: 0,
@@ -156,7 +163,9 @@ Page({
       startDate: this.data.startDate,
       startTime: this.data.startTime,
       endDate: this.data.endDate,
-      endTime: this.data.endTime
+      endTime: this.data.endTime,
+      start_time: this.data.startDate + 'T' + this.data.startTime + ':00Z',
+      end_time: this.data.endDate + 'T' + this.data.endTime + ':00Z',
     };
 
     // 发布活动到后端
@@ -230,55 +239,87 @@ Page({
       title: '发布中...',
     });
     
-    // 调用后端API发布活动
-    wx.request({
-      url: 'https://your-api-domain.com/api/publishActivity', // 替换为实际API地址
-      method: 'POST',
-      data: activityData,
-      header: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + wx.getStorageSync('token') // 如果有登录验证
-      },
-      success: function(res) {
-        wx.hideLoading();
-        
-        if (res.data.success) {
-          wx.showToast({
-            title: '发布成功',
-            icon: 'success',
-            duration: 2000,
-            success: () => {
-              // 发布成功后返回上一页
-              setTimeout(() => {
-                wx.navigateBack();
-              }, 2000);
-            }
-          });
-        } else {
-          wx.showToast({
-            title: res.data.message || '发布失败',
-            icon: 'none',
-            duration: 2000
-          });
-        }
-      },
-      fail: function() {
-        wx.hideLoading();
-        wx.showToast({
-          title: '网络错误，请重试',
-          icon: 'none',
-          duration: 2000
-        });
-      }
+    Api.createActivity(activityData);
+
+    wx.showToast({
+      title: '发布成功',
+      icon: 'success'
     });
   },
 
-  // AI快速填写入口
-  onAIAssistTap: function() {
-    // 这里跳转到AI快速填写页面，此处只预留入口
-    wx.showToast({
-      title: 'AI快速填写功能开发中',
-      icon: 'none'
+  // 点击AI按钮
+  onAIAssistTap() {
+    this.setData({
+      showAISection: !this.data.showAISection
     });
+  },
+  
+  // 关闭输入框
+  onCloseAISection() {
+    this.setData({
+      showAISection: false,
+      aiInputText: ''
+    });
+  },
+  
+  // 输入框内容变化
+  onAIInput(e) {
+    this.setData({
+      aiInputText: e.detail.value
+    });
+  },
+  
+  // 提交生成
+  onAISubmit() {
+    const text = this.data.aiInputText.trim();
+    if (!text) {
+      wx.showToast({
+        title: '请输入内容',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 这里调用AI接口
+    this.generateContent(text);
+  },
+  
+  // AI生成内容（示例）
+  generateContent(prompt) {
+    wx.showLoading({
+      title: 'AI生成中...',
+    });
+    
+    // 模拟API调用
+    setTimeout(() => {
+      wx.hideLoading();
+      Api.extractActivity({
+        'article_url': prompt
+      }).then(
+        data => {
+          console.log(data);
+          this.setData({
+            name: data.data.activity_info.activity_name,
+            location: data.data.activity_info.location,
+            description: data.data.activity_info.description,
+            tags: data.data.activity_info.tags,
+            startDate: TimeUtil.formatDate(data.data.activity_info.start_time, 'YYYY-MM-DD'),
+            startTime: TimeUtil.formatDate(data.data.activity_info.start_time, 'HH:mm'),
+            endDate: TimeUtil.formatDate(data.data.activity_info.end_time, 'YYYY-MM-DD'),
+            endTime: TimeUtil.formatDate(data.data.activity_info.end_time, 'HH:mm'),
+          });
+        }
+      );
+      wx.showToast({
+        title: '生成成功',
+        icon: 'success'
+      });
+      
+      // 关闭输入框
+      this.setData({
+        showAISection: false,
+        aiInputText: ''
+      });
+    }, 6000);
   }
 })

@@ -85,6 +85,113 @@ class TimeUtil {
       return 'completed';
     }
   }
+
+  /**
+   * 格式化时间
+   * @param {string} dateString - 时间字符串
+   * @param {string} format - 格式，默认 'YYYY-MM-DD HH:mm:ss'
+   * @returns {string} 格式化后的时间
+   */
+  static formatDate(dateString, format = 'YYYY-MM-DD HH:mm:ss') {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    
+    // 检查日期是否有效
+    if (isNaN(date.getTime())) {
+      return dateString;
+    }
+    
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hour = String(date.getHours()).padStart(2, '0');
+    const minute = String(date.getMinutes()).padStart(2, '0');
+    const second = String(date.getSeconds()).padStart(2, '0');
+    
+    // 替换格式字符串
+    return format
+      .replace('YYYY', year)
+      .replace('MM', month)
+      .replace('DD', day)
+      .replace('HH', hour)
+      .replace('mm', minute)
+      .replace('ss', second);
+  }
+
+  /**
+   * 获取相对时间（如：刚刚、3分钟前、昨天等）
+   * @param {string} dateString - 时间字符串
+   * @returns {string} 相对时间
+   */
+  static getRelativeTime(dateString) {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    console.log(date);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+    
+    if (diffInSeconds < 60) {
+      return '刚刚';
+    }
+    
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes}分钟前`;
+    }
+    
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+      return `${diffInHours}小时前`;
+    }
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) {
+      return '昨天';
+    }
+    
+    if (diffInDays < 7) {
+      return `${diffInDays}天前`;
+    }
+    
+    if (diffInDays < 30) {
+      const weeks = Math.floor(diffInDays / 7);
+      return `${weeks}周前`;
+    }
+    
+    // 超过一个月显示具体日期
+    return this.formatDate(dateString, 'YYYY-MM-DD');
+  }
+
+  /**
+   * 获取活动常用时间格式
+   * @param {string} dateString - 时间字符串
+   * @returns {string} 格式化后的时间
+   */
+  static getActivityTime(dateString) {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    const now = new Date();
+    
+    // 判断是否是今天
+    const isToday = date.toDateString() === now.toDateString();
+    
+    // 判断是否是今年
+    const isThisYear = date.getFullYear() === now.getFullYear();
+    
+    if (isToday) {
+      // 今天：显示时间
+      return this.formatDate(dateString, 'HH:mm');
+    } else if (isThisYear) {
+      // 今年：显示月-日 时间
+      return this.formatDate(dateString, 'MM-DD HH:mm');
+    } else {
+      // 往年：显示年-月-日
+      return this.formatDate(dateString, 'YYYY-MM-DD');
+    }
+  }
 }
 
 module.exports = TimeUtil;

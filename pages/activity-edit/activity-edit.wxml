@@ -12,7 +12,7 @@
         name="name" 
         class="input" 
         placeholder="请输入活动名称" 
-        value=""
+        value="{{name}}"
       />
     </view>
     
@@ -78,7 +78,7 @@
         name="location" 
         class="input" 
         placeholder="请输入活动地点" 
-        value=""
+        value="{{location}}"
       />
     </view>
     
@@ -89,7 +89,7 @@
         name="tags" 
         class="input" 
         placeholder="用逗号分隔，例如：文学,读书会,推理" 
-        value=""
+        value="{{tags}}"
       />
     </view>
     
@@ -100,7 +100,7 @@
         name="detail" 
         class="textarea" 
         placeholder="请输入活动详情" 
-        value=""
+        value="{{description}}"
       ></textarea>
     </view>
     
@@ -121,6 +121,25 @@
       <view class="ai-button" bindtap="onAIAssistTap">
         <text class="ai-icon">⚡</text>
         <text class="ai-text">AI快速填写</text>
+      </view>
+      <!-- 点击后显示的输入框 -->
+      <view class="ai-input-container" wx:if="{{showAISection}}">
+        <view class="ai-input-header">
+          <text class="ai-input-title">请输入活动信息或微信公众号链接</text>
+          <text class="ai-input-close" bindtap="onCloseAISection">×</text>
+        </view>
+        <textarea 
+          class="ai-textarea" 
+          placeholder="例如：帮我写一份关于环保的社团活动策划..." 
+          value="{{aiInputText}}"
+          bindinput="onAIInput"
+          maxlength="500"
+          auto-height
+        />
+        <view class="ai-input-footer">
+          <text class="ai-char-count">{{aiInputText.length}}/500</text>
+          <button class="ai-submit-btn" bindtap="onAISubmit">生成</button>
+        </view>
       </view>
     </view>
     

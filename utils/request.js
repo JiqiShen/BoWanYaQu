@@ -2,7 +2,7 @@
 const request = (options) => {
   return new Promise((resolve, reject) => {
     // 获取 token
-    const token = wx.getStorageSync('user_token');
+    const token = wx.getStorageSync('token');
     
     const defaultHeader = {
       'Content-Type': 'application/json'
@@ -36,9 +36,9 @@ const request = (options) => {
         }
         
         // 统一处理响应
-        if (res.statusCode === 200) {
+        if (res.statusCode === 200 || res.statusCode === 201 || res.statusCode === 204) {
           if (res.data.code === 200) {
-            resolve(res.data.data);
+            resolve(res.data);
           } else {
             // 业务逻辑错误
             wx.showToast({
@@ -66,7 +66,7 @@ const request = (options) => {
         reject(err);
       },
       complete: () => {
-        // 请求完成
+
       }
     });
   });

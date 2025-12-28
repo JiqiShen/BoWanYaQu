@@ -49,20 +49,23 @@
 
 .user-status {
   align-self: flex-start;
+  white-space: nowrap;
 }
 
 .status-badge {
   padding: 8rpx 16rpx;
   border-radius: 20rpx;
-  font-size: 20rpx;
+  font-size: 30rpx;
   font-weight: bold;
+  display: inline-block;
+  white-space: nowrap;
 }
 
-.status-badge.verified {
+.status-badge.student {
   background: rgba(82, 196, 26, 0.9);
 }
 
-.status-badge.unverified {
+.status-badge.club_admin {
   background: rgba(245, 34, 45, 0.9);
 }
 

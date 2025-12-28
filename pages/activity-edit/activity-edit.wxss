@@ -129,6 +129,12 @@
   border-radius: 50rpx;
   color: #d81e06;
   font-size: 28rpx;
+  transition: all 0.3s ease;
+}
+
+.ai-button:active {
+  transform: scale(0.98);
+  background-color: #ffeaea;
 }
 
 .ai-icon {
@@ -138,6 +144,99 @@
 
 .ai-text {
   font-weight: 500;
+}
+
+/* 输入框容器 */
+.ai-input-container {
+  margin-top: 30rpx;
+  padding: 30rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 输入框头部 */
+.ai-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.ai-input-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.ai-input-close {
+  font-size: 40rpx;
+  color: #999;
+  padding: 10rpx 20rpx;
+  line-height: 1;
+}
+
+.ai-input-close:active {
+  color: #666;
+}
+
+/* 文本输入框 */
+.ai-textarea {
+  width: 100%;
+  text-align: left;
+  min-height: 200rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: #333;
+  border: 2rpx solid #eee;
+  box-sizing: border-box;
+}
+
+.ai-textarea:focus {
+  border-color: #d81e06;
+  background: #fff;
+}
+
+/* 输入框底部 */
+.ai-input-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.ai-char-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.ai-submit-btn {
+  background: linear-gradient(135deg, #d81e06 0%, #ff6b6b 100%);
+  color: white;
+  border: none;
+  border-radius: 50rpx;
+  padding: 16rpx 40rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.ai-submit-btn:active {
+  opacity: 0.9;
 }
 
 .button-container {

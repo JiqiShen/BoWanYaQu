@@ -14,6 +14,50 @@
         <input class="input" placeholder="请输入用户名" placeholder-class="placeholder" bindinput="onUsernameInput" value="{{username}}" />
       </view>
       <view class="input-item">
+        <text class="label">学号</text>
+        <input class="input" placeholder="请输入学号" placeholder-class="placeholder" bindinput="onStudentIdInput" value="{{studentId}}" />
+      </view>
+      <view class="input-item">
+        <text class="label">邮箱</text>
+        <input class="input" placeholder="请输入邮箱" placeholder-class="placeholder" bindinput="onEmailInput" value="{{email}}" />
+      </view>
+      <view class="input-item">
+        <text class="label">手机号码</text>
+        <input class="input" placeholder="请输入手机号码" placeholder-class="placeholder" bindinput="onPhoneInput" value="{{phone}}" />
+      </view>
+      <view class="input-item">
+        <text class="label">学院</text>
+        <input class="input" placeholder="请输入学院" placeholder-class="placeholder" bindinput="onCollegeInput" value="{{college}}" />
+      </view>
+      <view class="input-item">
+        <text class="label">专业</text>
+        <input class="input" placeholder="请输入专业" placeholder-class="placeholder" bindinput="onMajorInput" value="{{major}}" />
+      </view>
+      <view class="input-item">
+        <text class="label">年级</text>
+        <input class="input" placeholder="请输入年级" placeholder-class="placeholder" bindinput="onGradeInput" value="{{grade}}" />
+      </view>
+      <view class="selector-item">
+        <view class="selector-label">选择身份</view>
+        <view class="options-container">
+          <view 
+            class="option {{role === 'student' ? 'selected' : ''}}"
+            bindtap="selectRole"
+            data-value="student"
+          >
+            学生
+          </view>
+          <view 
+            class="option {{role === 'club_admin' ? 'selected' : ''}}"
+            bindtap="selectRole"
+            data-value="club_admin"
+          >
+            社团管理员
+          </view>
+        </view>
+        <view class="selector-hint">请选择您的身份</view>
+      </view>
+      <view class="input-item">
         <text class="label">密码</text>
         <view class="password-input-container">
           <input class="input"

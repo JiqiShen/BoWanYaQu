@@ -8,7 +8,15 @@ class Api {
     return request({
       url: `${BASE_API_URL}/auth/login`,
       method: 'POST',
-      data: { code }
+      data: code
+    });
+  }
+
+  static register(code) {
+    return request({
+      url: `${BASE_API_URL}/auth/register`,
+      method: 'POST',
+      data: code
     });
   }
   
@@ -20,10 +28,11 @@ class Api {
   }
   
   // ==================== 用户相关 ====================
-  static getUserProfile() {
+  static getUserProfile(params) {
     return request({
-      url: `${BASE_API_URL}/users/profile`,
-      method: 'GET'
+      url: `${BASE_API_URL}/user/profile`,
+      method: 'GET',
+      data: params
     });
   }
   
@@ -43,6 +52,14 @@ class Api {
       data: params
     });
   }
+
+  static getLatestActivities(params = {}) {
+    return request({
+      url: `${BASE_API_URL}/activities/latest`,
+      method: 'GET',
+      data: params
+    });
+  }
   
   static getActivityDetail(activityId) {
     return request({
@@ -58,11 +75,19 @@ class Api {
       data: activityData
     });
   }
+
+  static extractActivity(params) {
+    return request({
+      url: `${BASE_API_URL}/extract/wechat`,
+      method: 'POST',
+      data: params
+    });
+  }
   
   // ==================== 报名相关 ====================
   static signUpActivity(activityId, options = {}) {
     return request({
-      url: `${BASE_API_URL}/activities/${activityId}/registrations`,
+      url: `${BASE_API_URL}/activities/${activityId}/register`,
       method: 'POST',
       data: options
     });
@@ -77,7 +102,7 @@ class Api {
   
   static getMyRegistrations(params = {}) {
     return request({
-      url: `${BASE_API_URL}/users/registrations`,
+      url: `${BASE_API_URL}/user/registered-activities`,
       method: 'GET',
       data: params
     });
@@ -91,12 +116,25 @@ class Api {
       data: params
     });
   }
-  
-  static createClub(clubData) {
+
+  static getClubDetail(clubId) {
     return request({
-      url: `${BASE_API_URL}/clubs`,
-      method: 'POST',
-      data: clubData
+      url: `${BASE_API_URL}/clubs/${clubId}`,
+      method: 'GET'
+    });
+  }
+
+  static followClub(clubId) {
+    return request({
+      url: `${BASE_API_URL}/clubs/${clubId}/follow`,
+      method: 'POST'
+    });
+  }
+
+  static cancelFollowClub(clubId) {
+    return request({
+      url: `${BASE_API_URL}/clubs/${clubId}/follow`,
+      method: 'DELETE'
     });
   }
   
