@@ -106,3 +106,61 @@
   width: 60rpx;
   height: 60rpx;
 }
+
+/* 二选一选择器样式 - 与输入框风格统一 */
+.selector-item {
+  margin-bottom: 50rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.selector-label {
+  display: block;
+  font-size: 30rpx;
+  color: #333333;
+  margin-bottom: 20rpx;
+  font-weight: 500;
+}
+
+/* 选项容器 */
+.options-container {
+  display: flex;
+  gap: 30rpx;
+}
+
+/* 单个选项样式 */
+.option {
+  flex: 1;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 34rpx;
+  color: #333333;
+  text-align: center;
+  border-radius: 8rpx;
+  border: 2rpx solid #f0f0f0;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+/* 选中状态 */
+.option.selected {
+  color: #333333;
+  border-color: #333333;
+  background-color: #f9f9f9;
+  font-weight: 500;
+}
+
+/* 禁用状态 */
+.option.disabled {
+  color: #cccccc;
+  border-color: #f0f0f0;
+  background-color: #fafafa;
+}
+
+/* 提示文字 */
+.selector-hint {
+  font-size: 24rpx;
+  color: #999999;
+  margin-top: 10rpx;
+  line-height: 1.4;
+}

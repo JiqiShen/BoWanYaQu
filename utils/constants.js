@@ -1,7 +1,7 @@
 // utils/constants.js
 module.exports = {
   // API 基础 URL
-  BASE_API_URL: 'https://api.club-activities.com/v1',
+  BASE_API_URL: 'http://10.129.244.246:1234/v1',
   
   // 活动状态
   ACTIVITY_STATUS: {
@@ -56,8 +56,8 @@ module.exports = {
     ACTIVITY_DETAIL: '/pages/activity-detail/activity-detail',
     CLUB_LIST: '/pages/club-list/club-list',
     CLUB_DETAIL: '/pages/club-detail/club-detail',
-    MY: '/pages/my/my',
-    LOGIN: '/pages/login/login'
+    LOGIN: '/pages/login/login',
+    REGISTER: '/pages/register/register'
   },
   
   // 存储键名

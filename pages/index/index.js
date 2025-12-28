@@ -1,4 +1,6 @@
 // pages/index/index.js
+const Api = require('../../utils/api.js');
+const TimeUtil = require('../../utils/time.js');
 Page({
 
   /**
@@ -10,39 +12,11 @@ Page({
       { id: 2, url: "/assets/banners/b2.png" },
       { id: 3, url: "/assets/banners/b3.png" }
     ],
-    activityList: [
-      {
-        id: 1,
-        title: "武侠·推理联合读书会",
-        time: "12月11日",
-        bgColor: "#f1a9a0"
-      },
-      {
-        id: 2,
-        title: "编程马拉松",
-        time: "12月12日",
-        bgColor: "#f7e28c"
-      },
-      {
-        id: 3,
-        title: "音乐节志愿者",
-        time: "12月13日",
-        bgColor: "#bff4b9"
-      }
-    ],
-    clubsToShow: [
-      { name: '篮球社', id: 1 },
-      { name: '足球社', id: 2 },
-      { name: '音乐社', id: 3 },
-      { name: '舞蹈社', id: 4 },
-      { name: '摄影社', id: 5 },
-      { name: '文学社', id: 6 },
-      { name: '志愿者协会', id: 7 }
-    ],
+    activityList: [],
+    clubsToShow: [],
   },
   // “更多” 按钮点击
   onTapMore() {
-    console.log('onTapMore clicked');
     wx.switchTab({
       url: '/pages/activity-list/activity-list'
     });
@@ -73,7 +47,37 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    Api.getLatestActivities({
+      'limit': 3
+    }).then(
+      data => {
+        const activities = data.data.activities || [];
+        // 格式化时间
+        const formattedActivities = activities.map(item => {
+          return {
+            ...item,
+            formattedTime: TimeUtil.getActivityTime(item.start_time),
+            relativeTime: TimeUtil.getRelativeTime(item.start_time),
+            fullTime: TimeUtil.formatDate(item.start_time)
+          };
+        });
+        console.log(formattedActivities);
+        this.setData({
+          activityList: formattedActivities
+        });
+      }
+    );
+    Api.getClubs({
+      'page': 1,
+      'limit': 10
+    }).then(
+      data => {
+        console.log(data.data.clubs);
+        this.setData({
+          clubsToShow: data.data.clubs
+        });
+      }
+    );
   },
 
   /**

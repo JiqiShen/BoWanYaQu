@@ -19,28 +19,30 @@
       </button>
     </view>
     
-    <view wx:for="{{activityList}}" wx:key="id" class="card" 
-          style="background:{{item.bgColor}}"
-          bindtap="onTapActivity" data-activityId="{{item.id}}">
+    <view wx:for="{{activityList}}" wx:key="activity_id" class="card" 
+          style="background:#f1a9a0"
+          bindtap="onTapActivity" data-activityId="{{item.activity_id}}">
       <view class="row space-between">
         <text>{{item.title}}</text>
-        <text class="muted">{{item.time}}</text>
+        <text class="muted">{{item.relativeTime}}</text>
       </view>
     </view>
   </view>
 
   <!-- 关注的社团 -->
   <view class="section">
-    <view class="h-title">关注的社团</view>
+    <view class="h-title">推荐的社团</view>
     <scroll-view class="club-scroll"
                scroll-x="true"
                enable-flex="true"
                show-scrollbar="false">
       <view class="club-list">
-        <block wx:for="{{clubsToShow}}" wx:key="id">
-          <view class="club-item" data-clubId="{{item.id}}"
+        <block wx:for="{{clubsToShow}}" wx:key="club_id">
+          <view class="club-item" data-clubId="{{item.club_id}}"
             bindtap="onTapClub">
-            <image class="club-img" src="/assets/clubs/testing.JPG" mode="aspectFill" />
+            <view class="club-img color-bg-{{index % 6}}">
+              <text class="club-initial">{{item.name.charAt(0)}}</text>
+            </view>
             <text class="club-name">{{item.name}}</text>
           </view>
         </block>

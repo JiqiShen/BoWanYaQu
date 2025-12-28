@@ -1,4 +1,5 @@
 // pages/activity-list/activity-list.js
+const Api = require('../../utils/api.js');
 Page({
 
   /**
@@ -14,7 +15,7 @@ Page({
     
     // 分页相关数据 - 管理列表的分页状态
     currentPage: 1,      // 当前页码
-    totalPages: 5,       // 总页数
+    totalPages: 1,       // 总页数
     pageSize: 10,        // 每页显示的活动数量
     
     // 搜索相关数据 - 管理搜索功能状态
@@ -41,7 +42,6 @@ Page({
     this.loadActivityData();
     // 获取用户身份信息
     this.getUserRole();
-    this.loadActivityData();
   },
 
   /**
@@ -52,16 +52,20 @@ Page({
     // 显示加载状态，防止重复请求
     this.setData({ loading: true });
     
-    // 模拟网络请求延迟
     setTimeout(() => {
-      // 生成模拟数据
-      const mockData = this.generateMockData(1);
-      
-      // 更新页面数据
-      this.setData({
-        activityList: mockData,    // 设置活动列表数据
-        loading: false             // 关闭加载状态
-      });
+      Api.getActivities({
+        'page': this.data.currentPage,
+        'limit': this.data.pageSize
+      }).then(
+        data => {
+          console.log(data.data.activities);
+          this.setData({
+            activityList: data.data.activities,    
+            loading: false,
+            totalPages: Math.ceil(data.data.total / this.data.pageSize)             
+          });
+        }
+      );
       
       // 如果是第一页（下拉刷新），停止刷新动画
       if (this.data.page === 1) {
@@ -70,19 +74,22 @@ Page({
     }, 800);
   },
   loadSearchedActivityData() {
-    // 显示加载状态，防止重复请求
-    this.setData({ loading: true });
-    
-    // 模拟网络请求延迟
     setTimeout(() => {
-      // 生成模拟数据
-      const mockData = this.generateMockData(2);
-      
-      // 更新页面数据
-      this.setData({
-        activityList: mockData,    // 设置活动列表数据
-        loading: false             // 关闭加载状态
-      });
+      Api.getActivities({
+        'page': this.data.currentPage,
+        'limit': this.data.pageSize,
+        'keyword': this.data.searchKeyword
+      }).then(
+        data => {
+          console.log(data.data.activities);
+          this.setData({
+            activityList: data.data.activities,    
+            loading: false,
+            totalPages: Math.ceil(data.data.total / this.data.pageSize),
+            num: this.data.filterPeople           
+          });
+        }
+      );
       
       // 如果是第一页（下拉刷新），停止刷新动画
       if (this.data.page === 1) {
@@ -102,13 +109,13 @@ Page({
       const userInfo = wx.getStorageSync('userInfo');
       if (userInfo) {
         this.setData({
-          userRole: userInfo.role || 'student'
+          userRole: userInfo.role || 'manager'
         });
       } else {
         // 如果没有用户信息，默认设置为普通学生
         // 实际项目中应该引导用户登录
         this.setData({
-          userRole: 'student'
+          userRole: 'manager'
         });
       }
     } catch (e) {
@@ -119,23 +126,6 @@ Page({
       });
     }
     
-    // 实际项目中应该调用API获取用户身份，示例：
-    /*
-    wx.request({
-      url: 'https://your-api.com/user/role',
-      method: 'GET',
-      success: (res) => {
-        if (res.data.success) {
-          this.setData({
-            userRole: res.data.role
-          });
-        }
-      },
-      fail: (err) => {
-        console.error('获取用户身份失败:', err);
-      }
-    });
-    */
   },
 
   /**
@@ -168,145 +158,6 @@ Page({
     });
   },
   
-  /**
-   * 生成模拟大学社团活动数据
-   * 实际项目中应删除此方法，使用真实API数据
-   * @returns {Array} 模拟的活动数据数组
-   */
-  generateMockData(option) {
-    const activities = [];
-    const searchedActivities = [];
-    // 定义活动相关的基础数据选项
-    const statusList = ['进行中', '未开始', '已结束'];
-    const types = ['讲座', '户外', '其他'];
-    const locations = ['体育馆', '学生活动中心', '图书馆报告厅', '操场', '教学楼101', '音乐厅', '美术楼展厅'];
-    const clubs = ['算法协会', '足球社', '音乐社', '舞蹈社', '摄影社', '文学社', '志愿者协会', '辩论社', '动漫社', '科创社'];
-    const audienceTypes = ['社员', '所有人', '可参加'];
-    const locationTypes = ['校内', '校外'];
-    
-    // 预定义活动模板数据
-    const activitiesData = [
-      {
-        title: '人工智能前沿讲座',
-        description: '特邀计算机学院教授讲解人工智能最新发展，适合对AI技术感兴趣的同学参加。',
-        type: '讲座',
-        audience: '可参加',
-        people: '50-100',
-        locationType: '校内'
-      },
-      {
-        title: '校园定向越野',
-        description: '户外运动社团组织的校园定向越野活动，锻炼身体的同时探索校园美景。',
-        type: '户外',
-        audience: '所有人',
-        people: '20-50',
-        locationType: '校内'
-      },
-      {
-        title: '社团迎新联谊会',
-        description: '各社团联合举办迎新联谊活动，游戏互动、才艺展示，快速融入大学生活！',
-        type: '其他',
-        audience: '社员',
-        people: '100+',
-        locationType: '校内'
-      },
-      {
-        title: '编程马拉松比赛',
-        description: '24小时编程挑战赛，考验你的编程能力和团队协作，优胜者有丰厚奖励！',
-        type: '其他',
-        audience: '可参加',
-        people: '20-50',
-        locationType: '校内'
-      },
-      {
-        title: '敬老院志愿服务',
-        description: '志愿者协会组织前往敬老院开展关爱老人活动，传递温暖，奉献爱心。',
-        type: '其他',
-        audience: '社员',
-        people: '20人以内',
-        locationType: '校外'
-      },
-      {
-        title: '古典音乐会',
-        description: '音乐社倾情奉献古典音乐会，带你感受音乐的魅力，陶冶艺术情操。',
-        type: '讲座',
-        audience: '可参加',
-        people: '100+',
-        locationType: '校内'
-      },
-      {
-        title: '登山徒步活动',
-        description: '户外社团组织的周末登山徒步，亲近自然，放松心情。',
-        type: '户外',
-        audience: '社员',
-        people: '20-50',
-        locationType: '校外'
-      },
-      {
-        title: '创业经验分享会',
-        description: '邀请成功创业的校友分享创业经验，为有创业梦想的同学指点迷津。',
-        type: '讲座',
-        audience: '所有人',
-        people: '50-100',
-        locationType: '校内'
-      }
-    ];
-    
-    // 生成10个模拟活动数据
-    for (let i = 0; i < 10; i++) {
-      const statusIndex = i % 3;      // 循环使用状态
-      const dataIndex = i % 8;        // 循环使用活动模板
-      const locationIndex = i % 7;    // 循环使用地点
-      const clubIndex = i % 10;       // 循环使用社团
-      
-      // 创建活动对象
-      activities.push({
-        id: i + 1,                            // 活动ID
-        title: activitiesData[dataIndex].title,
-        description: activitiesData[dataIndex].description,
-        startTime: `2024-03-${15 + (i % 15)} 14:00`,  // 开始时间
-        endTime: `2024-03-${15 + (i % 15)} 17:00`,    // 结束时间
-        location: locations[locationIndex],   // 具体地点
-        organizer: clubs[clubIndex],          // 主办社团
-        status: statusList[statusIndex],      // 活动状态
-        type: activitiesData[dataIndex].type, // 活动类型
-        audience: activitiesData[dataIndex].audience, // 参与人员要求
-        people: activitiesData[dataIndex].people,     // 活动人数范围
-        locationType: activitiesData[dataIndex].locationType, // 校内/校外
-        participants: Math.floor(Math.random() * 200) + 50, // 已报名人数
-        isLiked: Math.random() > 0.7,         // 是否已点赞
-        likeCount: Math.floor(Math.random() * 100), // 点赞数
-        isAvailable: Math.random() > 0.3      // 是否可参加
-      });
-      if (i == 0){
-        searchedActivities.push({
-          id: i + 1,                            // 活动ID
-          title: activitiesData[dataIndex].title,
-          description: activitiesData[dataIndex].description,
-          startTime: `2024-03-${15 + (i % 15)} 14:00`,  // 开始时间
-          endTime: `2024-03-${15 + (i % 15)} 17:00`,    // 结束时间
-          location: locations[locationIndex],   // 具体地点
-          organizer: clubs[clubIndex],          // 主办社团
-          status: statusList[statusIndex],      // 活动状态
-          type: activitiesData[dataIndex].type, // 活动类型
-          audience: activitiesData[dataIndex].audience, // 参与人员要求
-          people: activitiesData[dataIndex].people,     // 活动人数范围
-          locationType: activitiesData[dataIndex].locationType, // 校内/校外
-          participants: Math.floor(Math.random() * 200) + 50, // 已报名人数
-          isLiked: Math.random() > 0.7,         // 是否已点赞
-          likeCount: Math.floor(Math.random() * 100), // 点赞数
-          isAvailable: Math.random() > 0.3      // 是否可参加
-        });
-      }
-    }
-    
-    if (option === 1){
-      return activities;
-    }else if (option === 2){
-      return searchedActivities;
-    }
-  },
-
   /**
    * 搜索活动
    * 处理搜索框输入事件，根据关键词筛选活动
@@ -434,7 +285,7 @@ Page({
     
     // 跳转到活动详情页，并传递活动ID参数
     wx.navigateTo({
-      url: `/pages/activity-detail/activity-detail?id=${activityId}`
+      url: `/pages/activity-detail/activity-detail?activityId=${activityId}`
     });
   },
 

@@ -1,3 +1,5 @@
+const Api = require("../../utils/api");
+
 // pages/club-detail.js
 Page({
   data: {
@@ -21,11 +23,14 @@ Page({
   },
   onLoad: function(options) {
     console.log(options.clubId) // 输出：value2
-    
-    // 可以将参数保存到 data 中
-    this.setData({
-      clubId: options.clubId,
-    })
+    Api.getClubDetail(options.clubId).then(
+      data => {
+        console.log(data.data);
+        this.setData({
+          clubId: options.clubId,
+          clubData: data.data
+        })
+    });
   },
   // 关注活动状态改变
   onFollowChange: function(e) {
@@ -48,22 +53,18 @@ Page({
     }
   },
 
-  // 报名按钮点击
+  // 关注按钮点击
   onRegisterTap: function() {
-    if (this.data.activityData.isRegistered) {
-      return;
-    }
-    
-    // 报名功能实现
-    this.setData({
-      'activityData.isRegistered': true,
-      'activityData.registeredCount': this.data.activityData.registeredCount + 1,
-      'activityData.remainingCount': this.data.activityData.remainingCount - 1
-    });
-    
-    
+    Api.followClub(this.data.clubId).then(
+      this.setData({
+        clubData:{
+          ...clubData,
+          is_followed: true
+        }
+      })
+    );
     wx.showToast({
-      title: '加入成功',
+      title: '关注成功',
       icon: 'success'
     });
   }

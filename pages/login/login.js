@@ -1,4 +1,6 @@
 // pages/login/login.js
+const Api = require('../../utils/api.js');
+const { PAGE_PATH } = require('../../utils/constants.js');
 Page({
   data: {
     username: '',
@@ -48,24 +50,52 @@ Page({
     
     setTimeout(() => {
       wx.hideLoading();
-      // 这里应该是实际的登录API调用
-      wx.showToast({
-        title: '登录成功',
-        icon: 'success'
-      });
-      
-      // 登录成功后跳转到首页
-      setTimeout(() => {
-        wx.switchTab({
-          url: '/pages/index/index',
-        });
-      }, 1500);
+      Api.login({
+        "username": username,
+        "password": password
+      }).then(
+        data => {
+          if (data.code === 200){
+            wx.showToast({
+              title: '登录成功',
+              icon: 'success'
+            });
+            wx.setStorageSync('token', data.data.token);
+            wx.setStorageSync('user_id', data.data.user_id);
+            setTimeout(() => {
+              wx.switchTab({
+                url: PAGE_PATH.INDEX,
+              });
+            }, 1500);
+          }
+    
+          // 处理错误（400状态码）
+          else if (data.code === 400) {
+            wx.showToast({
+              title: data.message,
+              icon: 'none',
+              duration: 2000
+            });
+            
+            // 可以添加清空密码框的逻辑
+            this.setData({ password: '' });
+          }
+          // 处理其他错误情况
+          else {
+            wx.showToast({
+              title: '注册失败，请重试',
+              icon: 'none',
+              duration: 2000
+            });
+          }
+        }
+      );
     }, 2000);
   },
 
   goToRegister: function() {
     wx.navigateTo({
-      url: '/pages/register/register',
+      url: PAGE_PATH.REGISTER,
     });
   },
 

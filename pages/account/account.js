@@ -1,17 +1,16 @@
 // pages/account/account.js
-// account.js
+const Api = require('../../utils/api.js')
 Page({
   data: {
     userInfo: {
-      nickName: '张三',
-      avatarUrl: '',
-      studentId: '2100012345',
-      department: '信息科学技术学院',
-      major: '计算机科学与技术',
-      grade: '2021级',
-      email: '2100012345@pku.edu.cn',
-      phone: '138****5678',
-      status: 'verified'
+      username: '',
+      student_id: '',
+      college: '',
+      major: '',
+      grade: '',
+      email: '',
+      phone: '',
+      role: 'student'
     }
   },
 
@@ -32,28 +31,19 @@ Page({
       this.setData({
         userInfo: {...this.data.userInfo, ...userInfo}
       });
+    }else{
+      Api.getUserProfile({
+        'user_id': wx.getStorageSync('user_id')
+      }).then(
+        data => {
+          this.setData({
+            userInfo: data.data
+          });
+          wx.setStorageSync('userInfo', data.data);
+          console.log(data.data);
+        }
+      )
     }
-  },
-
-  // 编辑资料
-  onEditProfile: function() {
-    wx.navigateTo({
-      url: '/pages/edit-profile/edit-profile'
-    });
-  },
-
-  // 修改密码
-  onChangePassword: function() {
-    wx.navigateTo({
-      url: '/pages/change-password/change-password'
-    });
-  },
-
-  // 安全设置
-  onSecuritySettings: function() {
-    wx.navigateTo({
-      url: '/pages/security-settings/security-settings'
-    });
   },
 
   // 退出登录
@@ -65,7 +55,8 @@ Page({
         if (res.confirm) {
           // 清除登录状态
           wx.removeStorageSync('token');
-          wx.removeStorageSync('userInfo');
+          wx.removeStorageSync('user_id');
+          wx.removeStorageSync('userInfo')
           
           // 跳转到登录页面
           wx.reLaunch({

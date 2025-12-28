@@ -10,7 +10,7 @@
       <!-- 搜索输入框 -->
       <input 
         class="search-input" 
-        placeholder="搜索活动名称、社团或地点" 
+        placeholder="搜索活动名称" 
         value="{{searchKeyword}}"
         bindinput="onSearch"
       />
@@ -34,45 +34,6 @@
     <!-- 筛选条件内容区域 -->
     <!-- 根据filterExpanded状态显示或隐藏 -->
     <view class="filter-content {{filterExpanded ? 'expanded' : ''}}">
-      
-      <!-- 活动类型筛选组 -->
-      <view class="filter-group">
-        <text class="filter-label">活动类型</text>
-        <view class="filter-options">
-          <!-- 全部选项 -->
-          <view 
-            class="filter-option {{filterType === 'all' ? 'active' : ''}}" 
-            data-type="all"
-            bindtap="selectType"
-          >
-            全部
-          </view>
-          <!-- 讲座选项 -->
-          <view 
-            class="filter-option {{filterType === 'lecture' ? 'active' : ''}}" 
-            data-type="lecture"
-            bindtap="selectType"
-          >
-            讲座
-          </view>
-          <!-- 户外选项 -->
-          <view 
-            class="filter-option {{filterType === 'outdoor' ? 'active' : ''}}" 
-            data-type="outdoor"
-            bindtap="selectType"
-          >
-            户外
-          </view>
-          <!-- 其他选项 -->
-          <view 
-            class="filter-option {{filterType === 'other' ? 'active' : ''}}" 
-            data-type="other"
-            bindtap="selectType"
-          >
-            其他
-          </view>
-        </view>
-      </view>
       
       <!-- 参与人员筛选组 -->
       <view class="filter-group">
@@ -175,37 +136,6 @@
         </picker>
       </view>
       
-      <!-- 活动地址筛选组 -->
-      <view class="filter-group">
-        <text class="filter-label">活动地址</text>
-        <view class="filter-options">
-          <!-- 全部选项 -->
-          <view 
-            class="filter-option {{filterLocation === 'all' ? 'active' : ''}}" 
-            data-location="all"
-            bindtap="selectLocation"
-          >
-            全部
-          </view>
-          <!-- 校内选项 -->
-          <view 
-            class="filter-option {{filterLocation === 'campus' ? 'active' : ''}}" 
-            data-location="campus"
-            bindtap="selectLocation"
-          >
-            校内
-          </view>
-          <!-- 校外选项 -->
-          <view 
-            class="filter-option {{filterLocation === 'offcampus' ? 'active' : ''}}" 
-            data-location="offcampus"
-            bindtap="selectLocation"
-          >
-            校外
-          </view>
-        </view>
-      </view>
-      
       <!-- 重置按钮 -->
       <view class="filter-actions">
         <view class="reset-btn" bindtap="resetFilters">重置筛选</view>
@@ -227,11 +157,11 @@
     <!-- 当不在加载状态时显示活动列表 -->
     <view class="activity-list" wx:else>
       <!-- 循环渲染活动列表 -->
-      <block wx:for="{{activityList}}" wx:key="id">
+      <block wx:for="{{activityList}}" wx:key="activity_id">
         
         <!-- 单个活动项 -->
         <!-- 点击跳转到活动详情页 -->
-        <view class="activity-item" bindtap="goToActivityDetail" data-id="{{item.id}}">
+        <view class="activity-item" bindtap="goToActivityDetail" data-id="{{item.activity_id}}">
           
           <!-- 活动封面和状态区域 -->
           <view class="activity-cover-container">
@@ -244,7 +174,7 @@
             </view>
             
             <!-- 社团标识 -->
-            <view class="club-badge">{{item.organizer}}</view>
+            <view class="club-badge">{{item.clubInfo.name}}</view>
             
             <!-- 可参加标识 -->
             <!-- 只有isAvailable为true的活动才显示此标识 -->
@@ -272,11 +202,7 @@
               </view>
               <view class="detail-item">
                 <text class="detail-label">活动人数:</text>
-                <text class="detail-value">{{item.people}}</text>
-              </view>
-              <view class="detail-item">
-                <text class="detail-label">活动地址:</text>
-                <text class="detail-value">{{item.locationType}}</text>
+                <text class="detail-value">{{item.maxParticipants}}</text>
               </view>
             </view>
             
@@ -293,7 +219,7 @@
               </view>
               <view class="meta-item">
                 <text class="meta-icon">👥</text>
-                <text class="meta-text">{{item.participants}}人报名</text>
+                <text class="meta-text">{{item.currentParticipants}}人报名</text>
               </view>
             </view>
             
@@ -376,7 +302,7 @@
     <text class="btn-label">发布活动</text>
   </view>
 
- <!-- 普通学生提示信息 -->
+  <!-- 普通学生提示信息 -->
   <view class="student-tip" wx:if="{{userRole === 'student'}}">
     <text class="tip-text">想发布活动？请联系社团管理人员</text>
   </view>

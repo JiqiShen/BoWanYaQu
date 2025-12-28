@@ -19,28 +19,29 @@
 
   <!-- 社团详情 -->
   <view class="section">
-    <text class="section-title">活动详情</text>
+    <text class="section-title">社团详情</text>
     <!-- 社团详情内容引用位置 -->
-    <text class="detail-content">{{clubData.detail}}</text>
+    <text class="detail-content">{{clubData.description}}</text>
+  </view>
+
+  <!-- 社团人数 -->
+  <view class="section">
+    <text class="section-title">社团人数</text>
+    <!-- 社团人数引用位置 -->
+    <text class="detail-content">{{clubData.member_count}}人</text>
   </view>
 
   <!-- 社团联系人  -->
   <view class="section">
-    <text class="section-title">活动详情</text>
+    <text class="section-title">社团联系人</text>
     <!-- 社团联系人引用位置 -->
     <text class="detail-content">{{clubData.contact}}</text>
   </view>
 
-  <!-- 关注社团 -->
-  <view class="follow-section">
-    <text class="follow-text">关注社团</text>
-    <switch class="follow-switch" checked="{{clubData.isFollowed}}" bindchange="onFollowChange" color="#d32f2f" />
-  </view>
-
-  <!-- 加入按钮 -->
+  <!-- 关注按钮 -->
   <view class="action-buttons">
-    <button class="btn {{clubData.isRegistered ? 'btn-disabled' : 'btn-primary'}}" bindtap="onRegisterTap" disabled="{{clubData.isRegistered}}">
-      {{activityData.isRegistered ? '已加入' : '申请加入'}}
+    <button class="btn {{clubData.is_followed ? 'btn-disabled' : 'btn-primary'}}" bindtap="onRegisterTap" disabled="{{clubData.is_followed}}">
+      {{clubData.is_followed ? '已关注' : '关注社团'}}
     </button>
   </view>
 </view>
